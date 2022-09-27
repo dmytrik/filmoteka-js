@@ -1,6 +1,18 @@
 .footer {
-  padding-top: 60px;
-  padding-bottom: 60px;
+  color: #545454;
+  background-color: #f7f7f7;
+}
+
+.footer__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 77px;
-  background-color: #6b2929;
+}
+
+.footer__img {
+  width: 14px;
+  height: 13px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
