@@ -37,6 +37,10 @@ p {
   margin-right: auto;
   padding-right: 32px;
   padding-left: 32px;
+  @media screen and(max-width: 320px) {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
 }
 img {
   display: block;
