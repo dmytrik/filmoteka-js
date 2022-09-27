@@ -1,8 +1,5 @@
 @import '~node_modules/modern-normalize/modern-normalize.css';
+@import './base';
 @import './header';
 @import './main';
 @import './footer';
-body {
-  font-family: Roboto;
-  font-weight: 500;
-}

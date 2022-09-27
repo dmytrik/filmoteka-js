@@ -1,0 +1,55 @@
+.main {
+  padding-top: 60px;
+  display: flex;
+}
+
+.films__list {
+  max-width: 1280px;
+}
+
+.films__item {
+  width: calc((100% - 16px * 2) / 3);
+  margin-right: 16px;
+  margin-bottom: 32px;
+  float: left;
+}
+
+/* .films__item {
+  width: 395px;
+  background-color: #188ce8;
+} */
+
+.films__list:last-child {
+  margin-right: 0;
+  float: right;
+}
+
+.films__item:nth-child(3n + 3) {
+  margin-right: 0;
+  float: right;
+}
+
+.film__name {
+  margin-top: 12px;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  /* identical to box height, or 120% */
+
+  text-transform: uppercase;
+
+  color: #000000;
+}
+
+.film__description {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  /* identical to box height, or 120% */
+
+  color: #ff6b08;
+}
