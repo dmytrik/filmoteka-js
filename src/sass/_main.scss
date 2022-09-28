@@ -4,6 +4,8 @@
 }
 
 .films__list {
+  display: flex;
+  flex-wrap: wrap;
   max-width: 1280px;
   margin-left: -8px;
   margin-right: -8px;
@@ -94,16 +96,19 @@
 }
 
 .pagination a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 40px;
   height: 40px;
   color: black;
   float: left;
-  padding: 8px 16px;
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
   line-height: 26px;
+  cursor: pointer;
 }
 
 .pagination a.active {
@@ -112,18 +117,27 @@
   border-radius: 5px;
 }
 
-.pagination a:hover:not(.active) {
-  background-color: #ff6b08;
-  color: #fff;
-  border-radius: 5px;
-}
-.pagination__arrow {
+.pagination .pagination__arrow {
   width: 40px;
   height: 40px;
   background-color: #f7f7f7;
   border-radius: 5px;
+  &:hover {
+    background-color: #ff6b08;
+  }
+  &:focus {
+    background-color: #ff6b08;
+  }
 }
+
+.pagination a:hover:not(.active) {
+  background-color: silver;
+  color: #fff;
+  border-radius: 5px;
+}
+
 .pagination__arrow_prev {
+  margin-right: 5px;
   background-image: url('../images/left_arrow.svg');
   &.pagination__arrow_prev:hover {
     background-image: url('../images/left_arrow-white.svg');
@@ -131,6 +145,7 @@
 }
 
 .pagination__arrow_next {
+  margin-left: 8px;
   background-image: url('../images/right_arrow.svg');
   &.pagination__arrow_next:hover {
     background-image: url('../images/right_arrow-white.svg');
