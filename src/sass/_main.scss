@@ -7,6 +7,8 @@
   max-width: 1280px;
   margin-left: -8px;
   margin-right: -8px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .films__item {
@@ -39,6 +41,10 @@
 // }
 .films__item:last-child {
   margin-bottom: 60px;
+}
+
+.film_img {
+  border-radius: 5px;
 }
 
 .film__name {
