@@ -43,7 +43,7 @@ const createAccount = async () => {
   const email = document.querySelector('[placeholder="Login"]').value
   const password = document.querySelector('[placeholder="Password"]').value
   if (email === "" || password === "") {
-    notify.innerHTML = "Введіть логін/пароль для реєстрації"
+    notify.innerHTML = "Enter login and password to register"
     return
   }
   try {
@@ -53,13 +53,13 @@ const createAccount = async () => {
   }
   catch (error) {
     if (error.message.includes("invalid-email")) {
-      notify.innerHTML = "Невірно вказаний email/пароль"
+      notify.innerHTML = "Wrong email"
     }
     if (error.message.includes("weak-password")) {
-      notify.innerHTML = "Пароль повинен мати хотяб 6 символів"
+      notify.innerHTML = "Password must have at least 6 symbol"
     }
     if (error.message.includes("email-already-in-use")) {
-      notify.innerHTML = "Користувач вже існує"
+      notify.innerHTML = "User alreary created"
     }
   }
 }
@@ -70,10 +70,10 @@ const loginEmailPassword = async () => {
   const loginEmail = document.querySelector('[placeholder="Login"]').value
   const loginPassword = document.querySelector('[placeholder="Password"]').value
   if (loginEmail === "" || loginPassword === "") {
-    notify.innerHTML = "Щоб увійти введіть логін/пароль"
+    notify.innerHTML = "Enter login and password"
     return
   } else if (loginPassword < 6) {
-    notify.innerHTML = "Пароль повинен мати хотяб 6 символів"
+    notify.innerHTML = "Password must have at least 6 symbol"
     return
   }
   try {
@@ -84,11 +84,11 @@ const loginEmailPassword = async () => {
   }
   catch (error) {
     if (error.message.includes("invalid-email") || error.message.includes("wrong-password")) {
-      notify.innerHTML = "Невірно вказаний email/пароль"
+      notify.innerHTML = "Wrong password or email"
     } else if (error.message.includes("user-not-found")) {
-      notify.innerHTML = "Користувача не знайдено"
+      notify.innerHTML = "User not found"
     } else if (error.message.includes("too-many-requests")) {
-      notify.innerHTML = "Забагато невдалих спроб, спробуйте пізніше"
+      notify.innerHTML = "Too many request, please try later"
     }
   }
 }
@@ -109,7 +109,7 @@ const monitorAuthState = async () => {
                 <input type="checkbox">
                 <span class="slider round"></span>
               </label>`
-      notify.innerHTML = `Вітаємо ${user.email}.`
+      notify.innerHTML = `Welcome back ${user.email}!.`
       document.querySelector(".more-button-list").insertAdjacentElement("afterbegin", notify)
       document.querySelector("#logout__button").addEventListener("click", logout)
     }
