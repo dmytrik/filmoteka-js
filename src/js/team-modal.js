@@ -1,18 +1,24 @@
-import { refs } from './refs';
+const refs = {
+  aboutDev: document.querySelector('.footer-btn'),
+  backdrop: document.querySelector('.backdrop'),
+};
 
-const { aboutDev, teamModalBtnClose, backdrop } = refs;
+const { aboutDev, backdrop } = refs;
 aboutDev.addEventListener('click', openTeamModal);
-teamModalBtnClose.addEventListener('click', closeTeamModal);
-window.addEventListener('click', closeTeamModal);
-window.addEventListener('keydown', closeTeamModal);
+backdrop.addEventListener('click', closeTeamModal);
 
 function openTeamModal() {
-    backdrop.classList.remove('is-hidden');
+  backdrop.classList.toggle('is-hidden');
+  window.addEventListener('keydown', closeTeamModal);
 }
 
-function closeTeamModal(ev) {
-    if (
-        ev.target === backdrop || ev.keyCode === 27 || ev.target === teamModalBtnClose) {
-        backdrop.classList.add('is-hidden');
-    }
+function closeTeamModal(e) {
+  if (
+    e.target.classList.contains('backdrop') ||
+    e.target.classList.contains('close_modal') ||
+    e.code === 'Escape'
+  ) {
+    backdrop.classList.toggle('is-hidden');
+    window.removeEventListener('keydown', closeTeamModal);
+  }
 }
