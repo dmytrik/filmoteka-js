@@ -8,6 +8,7 @@ const IMG_REGUEST = 'https://image.tmdb.org/t/p/original';
 const API_KEY = '5fe2b2c003e2bf661ee6b8424d931ac2';
 const POPULAR_MOVIE_REGUEST =
   'https://api.themoviedb.org/3/trending/movie/week';
+const windowWidth = window.innerWidth;
 
 getMovies(currentPage).then(renderMovies);
 
@@ -48,33 +49,55 @@ function renderMovies(movies) {
 function pagination(totalPages, currentPage) {
   totPages = totalPages;
   const page = [];
-  let numberPage = Number(currentPage) + 7;
-  if (currentPage < 4) {
+  if (windowWidth >= 768) {
+    let numberPage = Number(currentPage) + 7;
+    if (currentPage < 4) {
+      page.push('<a class="back pagination__arrow pagination__arrow_prev" >');
+      for (
+        let index = 1;
+        index < Number(numberPage) && index < totalPages;
+        index++
+      ) {
+        page.push(`<a id="${index}">${index}</a>`);
+      }
+      page.push(
+        `<a id="">...</a><a id="${totalPages}">${totalPages}</a><a class="next pagination__arrow pagination__arrow_next"></a>`
+      );
+    } else {
+      page.push(
+        `<a class="back pagination__arrow pagination__arrow_prev" ></a><a id="1">1</a><a id="">...</a>`
+      );
+      for (
+        let index = Number(currentPage - 2);
+        index < Number(numberPage - 4) && index < totalPages;
+        index++
+      ) {
+        page.push(`<a id="${index}">${index}</a>`);
+      }
+      page.push(
+        `<a id="">...</a><a id="${totalPages}">${totalPages}</a><a class="next pagination__arrow pagination__arrow_next"></a>`
+      );
+    }
+  }
+  if (windowWidth < 768) {
     page.push('<a class="back pagination__arrow pagination__arrow_prev" >');
-    for (
-      let index = 1;
-      index < Number(numberPage) && index < totalPages;
-      index++
-    ) {
-      page.push(`<a id="${index}">${index}</a>`);
+    if (currentPage <= 3) {
+      for (let i = 1; i <= 5; i += 1) {
+        page.push(`<a id="${i}">${i}</a>`);
+      }
     }
-    page.push(
-      `<a id="">...</a><a id="${totalPages}">${totalPages}</a><a class="next pagination__arrow pagination__arrow_next"></a>`
-    );
-  } else {
-    page.push(
-      `<a class="back pagination__arrow pagination__arrow_prev" ></a><a id="1">1</a><a id="">...</a>`
-    );
-    for (
-      let index = Number(currentPage - 2);
-      index < Number(numberPage - 4) && index < totalPages;
-      index++
-    ) {
-      page.push(`<a id="${index}">${index}</a>`);
+    if (3 < currentPage && currentPage < totPages - 2) {
+      for (let i = currentPage - 2; i <= currentPage + 2; i += 1) {
+        page.push(`<a id="${i}">${i}</a>`);
+      }
     }
-    page.push(
-      `<a id="">...</a><a id="${totalPages}">${totalPages}</a><a class="next pagination__arrow pagination__arrow_next"></a>`
-    );
+    if (currentPage === totPages - 2) {
+      for (let i = currentPage - 2; i <= totPages; i += 1) {
+        page.push(`<a id="${i}">${i}</a>`);
+      }
+    }
+
+    page.push('<a class="next pagination__arrow pagination__arrow_next"></a>');
   }
 
   paginationContainer.innerHTML = page.join('');
@@ -108,6 +131,9 @@ function paginationAdd(e) {
   }
 
   currentPage = Number(e.target.getAttribute('id'));
+  if (currentPage === 0) {
+    return;
+  }
   container.innerHTML = '';
   getMovies(currentPage).then(renderMovies);
 }

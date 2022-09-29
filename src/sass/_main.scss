@@ -144,17 +144,21 @@
 }
 
 .pagination__arrow_prev {
-  margin-right: 5px;
   background-image: url('../images/left_arrow.svg');
   &.pagination__arrow_prev:hover {
     background-image: url('../images/left_arrow-white.svg');
   }
+  @media screen and(min-width: 768px) {
+    margin-right: 5px;
+  }
 }
 
 .pagination__arrow_next {
-  margin-left: 8px;
   background-image: url('../images/right_arrow.svg');
   &.pagination__arrow_next:hover {
     background-image: url('../images/right_arrow-white.svg');
+  }
+  @media screen and(min-width: 768px) {
+    margin-left: 8px;
   }
 }
