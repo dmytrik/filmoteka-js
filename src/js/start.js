@@ -8,6 +8,8 @@ const container = document.querySelector('.films__list');
 const paginationContainer = document.querySelector('#pagination');
 const moviesList = document.querySelector('[data-movies]');
 const formEl = document.querySelector('.search_form');
+const formInput = document.querySelector('.search');
+const warning = document.querySelector('.search_warning');
 const IMG_REGUEST = 'https://image.tmdb.org/t/p/original';
 const API_KEY = '5fe2b2c003e2bf661ee6b8424d931ac2';
 const POPULAR_MOVIE_REGUEST =
@@ -116,6 +118,9 @@ function pagination(totalPages, currentPage) {
 paginationContainer.addEventListener('click', paginationAdd);
 
 function paginationAdd(e) {
+  console.log('тізен');
+  formInput.value = '';
+  warning.textContent = '';
   if (e.target.classList.contains('back')) {
     currentPage -= 1;
     if (currentPage < 1) {
@@ -165,6 +170,16 @@ function onClearPage() {
 
 function rendeNewPage() {
   tmdbApiService.fetchMovie().then(response => {
+    if (response.data.results.length === 0) {
+      paginationContainer.addEventListener('click', paginationAdd);
+      formInput.value = '';
+      warning.textContent =
+        'Search result not successful. Enter the correct movie name and ';
+      return;
+    }
+    paginationContainer.removeEventListener('click', paginationAdd);
+    formInput.value = '';
+    warning.textContent = '';
     onClearPage();
     const totPages = response.data.total_pages;
     pagination(totPages, tmdbApiService.getpage());
@@ -187,6 +202,9 @@ async function fetchSearshedQuery(movies) {
 }
 
 function onChangePage(e) {
+  console.log('юра');
+  formInput.value = '';
+  warning.textContent = '';
   if (e.target.classList.contains('no-click')) {
     return;
   }
