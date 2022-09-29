@@ -119,7 +119,6 @@ const monitorAuthState = async () => {
 
 const logout = async () => {
   await signOut(auth);
-  location.href = "/"
 }
 
 monitorAuthState(); // авто-виклик функції перевірки зареєстрованого користувача
