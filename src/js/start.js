@@ -61,7 +61,13 @@ function pagination(totalPages, currentPage) {
   const page = [];
   if (windowWidth >= 768) {
     let numberPage = Number(currentPage) + 7;
-    if (currentPage < 4) {
+    if (totalPages <= 8) {
+      for (let i = 1; i <= totalPages; i += 1) {
+        page.push(`<a id="${i}">${i}</a>`)
+      }
+    }
+    else if (currentPage < 4) {
+      // console.log(push);
       page.push('<a class="back pagination__arrow pagination__arrow_prev" >');
       for (
         let index = 1;
@@ -119,8 +125,9 @@ paginationContainer.addEventListener('click', paginationAdd);
 
 function paginationAdd(e) {
   console.log('тізен');
+  const warning = document.querySelector('.search_warning');
   formInput.value = '';
-  warning.textContent = '';
+  warning.innerHTML = ""
   if (e.target.classList.contains('back')) {
     currentPage -= 1;
     if (currentPage < 1) {
@@ -172,19 +179,24 @@ function rendeNewPage() {
   tmdbApiService.fetchMovie().then(response => {
     if (response.data.results.length === 0) {
       paginationContainer.addEventListener('click', paginationAdd);
+      paginationContainer.removeEventListener('click', onChangePage);
+      const warning = document.querySelector('.search_warning');
       formInput.value = '';
       warning.textContent =
-        'Search result not successful. Enter the correct movie name and ';
+        'Search result not successful. Enter the correct movie name';
+
       return;
     }
     paginationContainer.removeEventListener('click', paginationAdd);
     formInput.value = '';
-    warning.textContent = '';
+    const warning = document.querySelector('.search_warning');
+    warning.innerHTML = ""
     onClearPage();
     const totPages = response.data.total_pages;
     pagination(totPages, tmdbApiService.getpage());
     const movies = response.data.results;
     fetchSearshedQuery(movies);
+
   });
 }
 
@@ -204,7 +216,7 @@ async function fetchSearshedQuery(movies) {
 function onChangePage(e) {
   console.log('юра');
   formInput.value = '';
-  warning.textContent = '';
+  warning.innerHTML = ""
   if (e.target.classList.contains('no-click')) {
     return;
   }
