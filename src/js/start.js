@@ -69,11 +69,11 @@ function pagination(totalPages, currentPage) {
         page.push(`<a id="${index}">${index}</a>`);
       }
       page.push(
-        `<a id="">...</a><a id="${totalPages}">${totalPages}</a><a class="next pagination__arrow pagination__arrow_next"></a>`
+        `<a id="" class ='no-click'>...</a><a id="${totalPages}">${totalPages}</a><a class="next pagination__arrow pagination__arrow_next"></a>`
       );
     } else {
       page.push(
-        `<a class="back pagination__arrow pagination__arrow_prev" ></a><a id="1">1</a><a id="">...</a>`
+        `<a class="back pagination__arrow pagination__arrow_prev" ></a><a id="1">1</a><a id="" class ='no-click'>...</a>`
       );
       for (
         let index = Number(currentPage - 2);
@@ -83,7 +83,7 @@ function pagination(totalPages, currentPage) {
         page.push(`<a id="${index}">${index}</a>`);
       }
       page.push(
-        `<a id="">...</a><a id="${totalPages}">${totalPages}</a><a class="next pagination__arrow pagination__arrow_next"></a>`
+        `<a id="" class ='no-click'>...</a><a id="${totalPages}">${totalPages}</a><a class="next pagination__arrow pagination__arrow_next"></a>`
       );
     }
   }
@@ -145,7 +145,7 @@ function paginationAdd(e) {
   getMovies(currentPage).then(renderMovies);
 }
 
-async function createMovieGallery(e) {
+function createMovieGallery(e) {
   e.preventDefault();
   const searshQuery = e.currentTarget.elements.searshQuery.value.trim();
   if (!searshQuery) {
@@ -154,6 +154,7 @@ async function createMovieGallery(e) {
   tmdbApiService.query = searshQuery;
   tmdbApiService.resetPage();
   rendeNewPage();
+  paginationContainer.removeEventListener('click', paginationAdd);
   paginationContainer.addEventListener('click', onChangePage);
 }
 
@@ -165,8 +166,8 @@ function onClearPage() {
 function rendeNewPage() {
   tmdbApiService.fetchMovie().then(response => {
     onClearPage();
-    const totalPages = response.data.total_pages;
-    pagination(totalPages, tmdbApiService.getpage());
+    const totPages = response.data.total_pages;
+    pagination(totPages, tmdbApiService.getpage());
     const movies = response.data.results;
     fetchSearshedQuery(movies);
   });
@@ -186,10 +187,14 @@ async function fetchSearshedQuery(movies) {
 }
 
 function onChangePage(e) {
+  if (e.target.classList.contains('no-click')) {
+    return;
+  }
   if (e.target.classList.contains('back')) {
-    tmdbApiService.decrementPage();
     console.log(tmdbApiService.getpage());
+    tmdbApiService.decrementPage();
     if (tmdbApiService.getpage() < 1) {
+      tmdbApiService.setPage(1);
       return;
     }
     rendeNewPage();
@@ -198,6 +203,7 @@ function onChangePage(e) {
   if (e.target.classList.contains('next')) {
     tmdbApiService.incrementPage();
     if (tmdbApiService.getpage() > totPages) {
+      tmdbApiService.setPage(totPages);
       return;
     }
     rendeNewPage();
