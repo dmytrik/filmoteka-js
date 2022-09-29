@@ -119,6 +119,7 @@ const monitorAuthState = async () => {
 
 const logout = async () => {
   await signOut(auth);
+  location.reload()
 }
 
 monitorAuthState(); // авто-виклик функції перевірки зареєстрованого користувача
