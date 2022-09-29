@@ -1,15 +1,23 @@
 const axios = require('axios');
 
+import TmdbApiService from './tmdb-api-service';
+
 let currentPage = 1;
 let totPages = null;
+const container = document.querySelector('.films__list');
 const paginationContainer = document.querySelector('#pagination');
 const moviesList = document.querySelector('[data-movies]');
+const formEl = document.querySelector('.search_form');
 const IMG_REGUEST = 'https://image.tmdb.org/t/p/original';
 const API_KEY = '5fe2b2c003e2bf661ee6b8424d931ac2';
 const POPULAR_MOVIE_REGUEST =
   'https://api.themoviedb.org/3/trending/movie/week';
 
+const tmdbApiService = new TmdbApiService();
+
 getMovies(currentPage).then(renderMovies);
+
+formEl.addEventListener('submit', createMovieGallery);
 
 async function getMovies(currentPage) {
   const movies = await axios
@@ -85,7 +93,6 @@ function pagination(totalPages, currentPage) {
 paginationContainer.addEventListener('click', paginationAdd);
 
 function paginationAdd(e) {
-  const container = document.querySelector('.films__list');
   if (e.target.classList.contains('back')) {
     currentPage -= 1;
     if (currentPage < 1) {
@@ -110,4 +117,67 @@ function paginationAdd(e) {
   currentPage = Number(e.target.getAttribute('id'));
   container.innerHTML = '';
   getMovies(currentPage).then(renderMovies);
+}
+
+async function createMovieGallery(e) {
+  e.preventDefault();
+  const searshQuery = e.currentTarget.elements.searshQuery.value.trim();
+  if (!searshQuery) {
+    return alert('please enter something');
+  }
+  tmdbApiService.query = searshQuery;
+  tmdbApiService.resetPage();
+  rendeNewPage();
+  paginationContainer.addEventListener('click', onChangePage);
+}
+
+function onClearPage() {
+  container.innerHTML = '';
+  paginationContainer.innerHTML = '';
+}
+
+function rendeNewPage() {
+  tmdbApiService.fetchMovie().then(response => {
+    onClearPage();
+    const totalPages = response.data.total_pages;
+    pagination(totalPages, tmdbApiService.getpage());
+    const movies = response.data.results;
+    fetchSearshedQuery(movies);
+  });
+}
+
+async function fetchSearshedQuery(movies) {
+  const dataMovies = [];
+  for (const { id } of movies) {
+    const dataMovie = await axios
+      .get(
+        `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`
+      )
+      .then(res => res.data);
+    dataMovies.push(dataMovie);
+  }
+  renderMovies(dataMovies);
+}
+
+function onChangePage(e) {
+  if (e.target.classList.contains('back')) {
+    tmdbApiService.decrementPage();
+    console.log(tmdbApiService.getpage());
+    if (tmdbApiService.getpage() < 1) {
+      return;
+    }
+    rendeNewPage();
+    return;
+  }
+  if (e.target.classList.contains('next')) {
+    tmdbApiService.incrementPage();
+    if (tmdbApiService.getpage() > totPages) {
+      return;
+    }
+    rendeNewPage();
+    return;
+  }
+
+  tmdbApiService.setPage(Number(e.target.getAttribute('id')));
+  rendeNewPage();
 }
