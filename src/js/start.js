@@ -36,7 +36,7 @@ function renderMovies(movies) {
     .map(({ poster_path, release_date, title, genres, id }) => {
       const genre = genres.map(({ name }) => name).join(', ');
       return `<li class="films__item" data-id = ${id}>
-    <img src=${IMG_REGUEST + poster_path} alt=${title} />
+    <img src=${IMG_REGUEST + poster_path} alt=${title} class="film_img"/>
     <p class="film__name">${title}</p>
     <p class="film__description">${genre} | ${release_date.slice(0, 4)}</p>
   </li>`;
