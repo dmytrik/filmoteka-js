@@ -1,0 +1,77 @@
+.header-library {
+  /* max-width: 1280px; */
+  height: 216px;
+  background-image: url('../images/header-library-bg.jpg');
+  margin: auto;
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: cover;
+  @media screen and(max-width: 768px) {
+    background-image: url('../images/header-library-bg-tablet.jpg');
+  }
+  @media screen and(max-width: 320px) {
+    background-image: url('../images/header--library-bg_mobile.jpg');
+  }
+}
+
+.button__box {
+  display: flex;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 40px;
+  height: 20px;
+}
+
+.watched_btn {
+  cursor: pointer;
+  margin-right: 16px;
+  width: 152px;
+  height: 44px;
+  left: 216px;
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+  background-color: transparent;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  /* or 133% */
+  text-transform: uppercase;
+
+  color: #ffffff;
+  transform: scale(1);
+  transition: all 0.3s;
+  &:hover {
+    box-shadow: 0px 8px 43px rgba(255, 255, 255, 0.6);
+    transform: scale(1.05);
+  }
+}
+
+.queue_btn {
+  cursor: pointer;
+  margin-left: 16px;
+  width: 152px;
+  height: 44px;
+  left: 400px;
+  background: #ff6b01;
+
+  border-radius: 5px;
+  border: none;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  /* or 133% */
+  text-transform: uppercase;
+  transform: scale(1);
+  transition: all 0.3s;
+
+  color: #ffffff;
+  &:hover {
+    box-shadow: 0px 8px 43px rgba(255, 107, 1, 0.6);
+    transform: scale(1.05);
+  }
+}
