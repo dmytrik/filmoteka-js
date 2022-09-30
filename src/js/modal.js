@@ -5,11 +5,19 @@ const IMG_REGUEST = 'https://image.tmdb.org/t/p/original';
 
 const closeModal = document.querySelector('.close-modal');
 const moviesList = document.querySelector('[data-movies]');
-const modalRef = document.querySelector('.modal');
+const modalRef = document.querySelector('.backdrop_modal_film');
 const modalConteinerRef = document.querySelector('.modal-conteiner');
+const body = document.querySelector('body');
 
 closeModal.addEventListener('click', onCloseModal);
 moviesList.addEventListener('click', openModal);
+modalRef.addEventListener('click', clickModal);
+
+function clickModal(event) {
+  if (event.currentTarget === event.target) {
+    onCloseModal();
+  }
+}
 
 async function getFullMoveInformation(id) {
   const informtionAboutMovie = await axios
@@ -32,14 +40,10 @@ function renderFullInformationAboutMovies(informtionAboutMovie) {
     overview,
     id,
   } = informtionAboutMovie;
-  // console.log(genres);
   let genresArr = [];
   for (let i = 0; i < genres.length; i += 1) {
-    // console.log(genres[i].name);
-
     genresArr.push(genres[i].name);
   }
-  // console.log(genresArr.join(', '));
   const genresString = genresArr.join(', ');
   const voteAverageRounding = vote_average.toFixed(1);
   const markapInformation = `<div class="img-wrap">
@@ -76,22 +80,26 @@ function renderFullInformationAboutMovies(informtionAboutMovie) {
 }
 
 function onCloseModal(event) {
-  event.preventDefault();
+  window.removeEventListener('keydown', onEscClose);
   modalRef.classList.add('is-hidden');
+  body.classList.remove('no-scroll');
+
   modalConteinerRef.innerHTML = '';
 }
 
 function openModal(event) {
-  const l = event.target.closest('.films__item');
-  // console.log('===', l);
+  window.addEventListener('keydown', onEscClose);
+  const li = event.target.closest('.films__item');
+  body.classList.add('no-scroll');
 
-  if (l === null) {
+  if (li === null) {
     return;
   }
-  const id = l.attributes[1].value;
-  // console.log(l.attributes[1].value);
+  const id = li.attributes[1].value;
   modalRef.classList.remove('is-hidden');
   getFullMoveInformation(id).then(renderFullInformationAboutMovies);
+}
 
-  // console.log('open', event.target);
+function onEscClose(event) {
+  if (event.code === 'Escape') onCloseModal();
 }
