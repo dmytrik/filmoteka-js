@@ -15,10 +15,7 @@ const API_KEY = '5fe2b2c003e2bf661ee6b8424d931ac2';
 const POPULAR_MOVIE_REGUEST =
   'https://api.themoviedb.org/3/trending/movie/week';
 const windowWidth = window.innerWidth;
-const genres = [];
 const tmdbApiService = new TmdbApiService();
-
-// https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US
 
 getMovies(currentPage).then(renderMovies);
 
@@ -46,21 +43,11 @@ async function getMovies(currentPage) {
       // return res.data.results;
       return movies;
     });
-  // const dataMovies = [];
-  // for (const { id } of movies) {
-  //   const dataMovie = await axios
-  //     .get(
-  //       `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`
-  //     )
-  //     .then(res => res.data);
-  //   dataMovies.push(dataMovie);
-  // }
 
   return movies;
 }
 
 function renderMovies(moviesObj) {
-  console.log(moviesObj);
   const { genres, movies } = moviesObj;
   const moviesHtml = movies
     .map(({ poster_path, release_date, title, genre_ids, id }) => {
@@ -217,17 +204,16 @@ function onClearPage() {
 
 function rendeNewPage() {
   tmdbApiService.fetchMovie().then(response => {
+    console.log(response.data.results);
     if (response.data.results.length === 0) {
-      paginationContainer.addEventListener('click', paginationAdd);
-      paginationContainer.removeEventListener('click', onChangePage);
       const warning = document.querySelector('.search_warning');
       formInput.value = '';
+      onClearPage();
       warning.textContent =
         'Search result not successful. Enter the correct movie name';
 
       return;
     }
-    paginationContainer.removeEventListener('click', paginationAdd);
     formInput.value = '';
     const warning = document.querySelector('.search_warning');
     warning.innerHTML = '';
@@ -240,16 +226,6 @@ function rendeNewPage() {
 }
 
 async function fetchSearshedQuery(movies) {
-  // const dataMovies = [];
-  // for (const { id } of movies) {
-  //   const dataMovie = await axios
-  //     .get(
-  //       `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`
-  //     )
-  //     .then(res => res.data);
-  //   dataMovies.push(dataMovie);
-  // }
-  // renderMovies(dataMovies);
   const genres = await axios
     .get(
       `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`
@@ -263,7 +239,6 @@ async function fetchSearshedQuery(movies) {
 }
 
 function onChangePage(e) {
-  console.log('юра');
   formInput.value = '';
   warning.innerHTML = '';
   if (e.target.classList.contains('no-click')) {
