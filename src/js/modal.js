@@ -21,7 +21,6 @@ async function getFullMoveInformation(id) {
 }
 
 function renderFullInformationAboutMovies(informtionAboutMovie) {
-  console.log('=>', informtionAboutMovie);
   const {
     poster_path,
     title,
