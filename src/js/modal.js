@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 const API_KEY = '5fe2b2c003e2bf661ee6b8424d931ac2';
-const IMG_REGUEST = 'https://image.tmdb.org/t/p/original';
+const IMG_REGUEST = 'https://image.tmdb.org/t/p/w500';
 
 const closeModal = document.querySelector('.close-modal');
 const moviesList = document.querySelector('[data-movies]');

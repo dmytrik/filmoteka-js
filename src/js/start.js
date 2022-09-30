@@ -10,12 +10,18 @@ const moviesList = document.querySelector('[data-movies]');
 const formEl = document.querySelector('.search_form');
 const formInput = document.querySelector('.search');
 const warning = document.querySelector('.search_warning');
-const IMG_REGUEST = 'https://image.tmdb.org/t/p/original';
+const IMG_REGUEST = 'https://image.tmdb.org/t/p/w500';
 const API_KEY = '5fe2b2c003e2bf661ee6b8424d931ac2';
 const POPULAR_MOVIE_REGUEST =
   'https://api.themoviedb.org/3/trending/movie/week';
 const windowWidth = window.innerWidth;
 const tmdbApiService = new TmdbApiService();
+
+axios
+  .get(
+    `https://api.themoviedb.org/3/collection/53?api_key=${API_KEY}&language=en-US`
+  )
+  .then(res => console.log(res));
 
 getMovies(currentPage).then(renderMovies);
 
