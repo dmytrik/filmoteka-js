@@ -17,6 +17,8 @@ export default class TmdbApiService {
       });
 
       const response = await axios.get(`${BASE_URL}search/movie?${options}`);
+      const loader = document.querySelector('.loader');
+      loader.classList.toggle('loader__hidden');
       return response;
     } catch (error) {
       console.log(error.message);
