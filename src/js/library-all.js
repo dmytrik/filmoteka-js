@@ -13,6 +13,23 @@ checkedLS();
 
 myLibraryEl.addEventListener('click', checkEvent);
 
+function checkedLS() {
+  if (localStorage.length === 0) {
+    const marckup = `<span class="film__name">Your library is empty!</span>`;
+    filmListEl.innerHTML = marckup;
+    return;
+  } else if (queueEl === null) {
+    libraryAllEl = JSON.parse(watchedEl);
+    getId();
+  } else if (watchedEl === null) {
+    libraryAllEl = JSON.parse(queueEl);
+    getId();
+  } else {
+    libraryAllEl = JSON.parse(watchedEl).concat(JSON.parse(queueEl));
+    getId();
+  }
+}
+
 function checkEvent(evt) {
   if (evt.target.innerText === 'MY LIBRARY') {
     getId();
@@ -36,33 +53,17 @@ async function getElementById(id) {
 }
 
 function renderMarckup(data) {
+  const genres = data.genres.map(el => el.name);
   const marckup = `<li class="films__item" data-id = ${data.id}>
       <img src=${IMG_REGUEST + data.poster_path} alt=${
     data.title
   } class="film_img"/>
       <p class="film__name">${data.title}</p>
-      <p class="film__description">${data.genre} | ${data.release_date.slice(
+      <p class="film__description">${genres} | ${data.release_date.slice(
     0,
     4
   )}</p>
     </li>`;
 
   filmListEl.innerHTML += marckup;
-}
-
-function checkedLS() {
-  if (localStorage.length === 0) {
-    const marckup = `<span class="film__name">Your library is empty!</span>`;
-    filmListEl.innerHTML = marckup;
-    return;
-  } else if (queueEl === null) {
-    libraryAllEl = JSON.parse(watchedEl);
-    getId();
-  } else if (watchedEl === null) {
-    libraryAllEl = JSON.parse(queueEl);
-    getId();
-  } else {
-    libraryAllEl = JSON.parse(watchedEl).concat(JSON.parse(queueEl));
-    getId();
-  }
 }
