@@ -46,9 +46,8 @@ function renderFullInformationAboutMovies(informtionAboutMovie) {
   }
   const genresString = genresArr.join(', ');
   const voteAverageRounding = vote_average.toFixed(1);
-  const markapInformation = `<div class="img-wrap">
-  <img src="${IMG_REGUEST + poster_path}" alt="${title}" calss="img" />
-</div>
+  const markapInformation = `
+  <img src="${IMG_REGUEST + poster_path}" alt="${title}" calss="modal-img" />
 <div>
   <h2 class="modal-title">${title}</h2>
   <div class="general-wrap">
