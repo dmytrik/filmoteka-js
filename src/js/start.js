@@ -63,10 +63,9 @@ function pagination(totalPages, currentPage) {
     let numberPage = Number(currentPage) + 7;
     if (totalPages <= 8) {
       for (let i = 1; i <= totalPages; i += 1) {
-        page.push(`<a id="${i}">${i}</a>`)
+        page.push(`<a id="${i}">${i}</a>`);
       }
-    }
-    else if (currentPage < 4) {
+    } else if (currentPage < 4) {
       // console.log(push);
       page.push('<a class="back pagination__arrow pagination__arrow_prev" >');
       for (
@@ -127,7 +126,7 @@ function paginationAdd(e) {
   console.log('тізен');
   const warning = document.querySelector('.search_warning');
   formInput.value = '';
-  warning.innerHTML = ""
+  warning.innerHTML = '';
   if (e.target.classList.contains('back')) {
     currentPage -= 1;
     if (currentPage < 1) {
@@ -190,13 +189,12 @@ function rendeNewPage() {
     paginationContainer.removeEventListener('click', paginationAdd);
     formInput.value = '';
     const warning = document.querySelector('.search_warning');
-    warning.innerHTML = ""
+    warning.innerHTML = '';
     onClearPage();
     const totPages = response.data.total_pages;
     pagination(totPages, tmdbApiService.getpage());
     const movies = response.data.results;
     fetchSearshedQuery(movies);
-
   });
 }
 
@@ -216,7 +214,7 @@ async function fetchSearshedQuery(movies) {
 function onChangePage(e) {
   console.log('юра');
   formInput.value = '';
-  warning.innerHTML = ""
+  warning.innerHTML = '';
   if (e.target.classList.contains('no-click')) {
     return;
   }
