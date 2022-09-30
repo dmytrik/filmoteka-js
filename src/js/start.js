@@ -17,12 +17,6 @@ const POPULAR_MOVIE_REGUEST =
 const windowWidth = window.innerWidth;
 const tmdbApiService = new TmdbApiService();
 
-axios
-  .get(
-    `https://api.themoviedb.org/3/collection/53?api_key=${API_KEY}&language=en-US`
-  )
-  .then(res => console.log(res));
-
 getMovies(currentPage).then(renderMovies);
 
 formEl.addEventListener('submit', createMovieGallery);
