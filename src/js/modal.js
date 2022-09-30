@@ -31,15 +31,16 @@ function renderFullInformationAboutMovies(informtionAboutMovie) {
     original_title,
     genres,
     overview,
+    id,
   } = informtionAboutMovie;
-  console.log(genres);
+  // console.log(genres);
   let genresArr = [];
   for (let i = 0; i < genres.length; i += 1) {
-    console.log(genres[i].name);
+    // console.log(genres[i].name);
 
     genresArr.push(genres[i].name);
   }
-  console.log(genresArr.join(', '));
+  // console.log(genresArr.join(', '));
   const genresString = genresArr.join(', ');
   const voteAverageRounding = vote_average.toFixed(1);
   const markapInformation = `<div class="img-wrap">
@@ -67,8 +68,8 @@ function renderFullInformationAboutMovies(informtionAboutMovie) {
   </div>
 
   <div class="button-wrap">
-    <button type="button" class="btn add-to-watched" data-watched>add to Watched</button>
-    <button type="button" class="btn add-to-queue" data-queue>add to queue</button>
+    <button type="button" class="btn add-to-watched" data-watched data-id = ${id}>add to watched</button>
+    <button type="button" class="btn add-to-queue" data-queue data-id = ${id}>add to queue</button>
   </div>
 </div>
 `;
@@ -76,21 +77,22 @@ function renderFullInformationAboutMovies(informtionAboutMovie) {
 }
 
 function onCloseModal(event) {
+  event.preventDefault();
   modalRef.classList.add('is-hidden');
   modalConteinerRef.innerHTML = '';
 }
 
 function openModal(event) {
   const l = event.target.closest('.films__item');
-  console.log('===', l);
+  // console.log('===', l);
 
   if (l === null) {
     return;
   }
   const id = l.attributes[1].value;
-  console.log(l.attributes[1].value);
+  // console.log(l.attributes[1].value);
   modalRef.classList.remove('is-hidden');
   getFullMoveInformation(id).then(renderFullInformationAboutMovies);
 
-  console.log('open', event.target);
+  // console.log('open', event.target);
 }
