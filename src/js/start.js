@@ -28,6 +28,10 @@ async function getMovies(currentPage) {
     .then(async res => {
       const totalPages = await res.data.total_pages;
       pagination(totalPages, currentPage);
+
+      const loader = document.querySelector('.loader');
+      loader.classList.toggle('loader__hidden');
+
       return res.data.results;
     });
   const dataMovies = [];
@@ -39,6 +43,7 @@ async function getMovies(currentPage) {
       .then(res => res.data);
     dataMovies.push(dataMovie);
   }
+
   return dataMovies;
 }
 
@@ -135,6 +140,8 @@ function paginationAdd(e) {
       return;
     }
     container.innerHTML = '';
+    const loader = document.querySelector('.loader');
+    loader.classList.toggle('loader__hidden');
     getMovies(currentPage).then(renderMovies);
     return;
   }
@@ -145,7 +152,10 @@ function paginationAdd(e) {
       return;
     }
     container.innerHTML = '';
+    const loader = document.querySelector('.loader');
+    loader.classList.toggle('loader__hidden');
     getMovies(currentPage).then(renderMovies);
+
     return;
   }
 
@@ -154,11 +164,15 @@ function paginationAdd(e) {
     return;
   }
   container.innerHTML = '';
+  const loader = document.querySelector('.loader');
+  loader.classList.toggle('loader__hidden');
   getMovies(currentPage).then(renderMovies);
 }
 
 function createMovieGallery(e) {
   e.preventDefault();
+  const loader = document.querySelector('.loader');
+  loader.classList.toggle('loader__hidden');
   const searshQuery = e.currentTarget.elements.searshQuery.value.trim();
   if (!searshQuery) {
     return alert('please enter something');
@@ -228,6 +242,8 @@ function onChangePage(e) {
       return;
     }
     rendeNewPage();
+    const loader = document.querySelector('.loader');
+    loader.classList.toggle('loader__hidden');
     return;
   }
   if (e.target.classList.contains('next')) {
@@ -237,9 +253,13 @@ function onChangePage(e) {
       return;
     }
     rendeNewPage();
+    const loader = document.querySelector('.loader');
+    loader.classList.toggle('loader__hidden');
     return;
   }
 
   tmdbApiService.setPage(Number(e.target.getAttribute('id')));
   rendeNewPage();
+  const loader = document.querySelector('.loader');
+  loader.classList.toggle('loader__hidden');
 }
