@@ -64,7 +64,7 @@ function renderMovies(moviesObj) {
         .join(', ');
 
       return `<li class="films__item" data-id = ${id}>
-    <img src=${IMG_REGUEST + poster_path} alt=${title} class="film_img"/>
+    <img src=${IMG_REGUEST + poster_path} alt=${title} class="film_img" loading="lazy"/>
     <p class="film__name">${title}</p>
     <p class="film__description">${genre} | ${
         release_date ? release_date.slice(0, 4) : '2022'
