@@ -1,7 +1,10 @@
 const axios = require('axios');
 import { addEventsOnModalBtn } from './local-storage';
 const API_KEY = '5fe2b2c003e2bf661ee6b8424d931ac2';
-const IMG_REGUEST = 'https://image.tmdb.org/t/p/original';
+
+
+const IMG_REGUEST = 'https://image.tmdb.org/t/p/w342';
+
 const closeModal = document.querySelector('.close-modal');
 const moviesList = document.querySelector('[data-movies]');
 const modalRef = document.querySelector('.backdrop_modal_film');
@@ -68,6 +71,9 @@ function renderFullInformationAboutMovies(informtionAboutMovie) {
   <img src="${IMG_REGUEST + poster_path}" alt="${title}" class="img" />
 </div>
 <div>
+  const markapInformation = `
+  <img src="${IMG_REGUEST + poster_path}" alt="${title}" class="modal-img" />
+<div class='right-wrap'>
   <h2 class="modal-title">${title}</h2>
   <div class="general-wrap">
     <div class="name-wrap">

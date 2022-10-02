@@ -10,7 +10,7 @@ const moviesList = document.querySelector('[data-movies]');
 const formEl = document.querySelector('.search_form');
 const formInput = document.querySelector('.search');
 const warning = document.querySelector('.search_warning');
-const IMG_REGUEST = 'https://image.tmdb.org/t/p/original';
+const IMG_REGUEST = 'https://image.tmdb.org/t/p/w500';
 const API_KEY = '5fe2b2c003e2bf661ee6b8424d931ac2';
 const POPULAR_MOVIE_REGUEST =
   'https://api.themoviedb.org/3/trending/movie/week';
@@ -64,7 +64,7 @@ function renderMovies(moviesObj) {
         .join(', ');
 
       return `<li class="films__item" data-id = ${id}>
-    <img src=${IMG_REGUEST + poster_path} alt=${title} class="film_img"/>
+    <img src=${IMG_REGUEST + poster_path} alt=${title} class="film_img" loading="lazy"/>
     <p class="film__name">${title}</p>
     <p class="film__description">${genre} | ${
         release_date ? release_date.slice(0, 4) : '2022'
