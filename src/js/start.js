@@ -10,12 +10,11 @@ const moviesList = document.querySelector('[data-movies]');
 const formEl = document.querySelector('.search_form');
 const formInput = document.querySelector('.search');
 const warning = document.querySelector('.search_warning');
-const IMG_REGUEST = 'https://image.tmdb.org/t/p/original';
+const IMG_REGUEST = 'https://image.tmdb.org/t/p/w342';
 const API_KEY = '5fe2b2c003e2bf661ee6b8424d931ac2';
 const POPULAR_MOVIE_REGUEST =
   'https://api.themoviedb.org/3/trending/movie/week';
 const windowWidth = window.innerWidth;
-
 const tmdbApiService = new TmdbApiService();
 
 getMovies(currentPage).then(renderMovies);
@@ -26,30 +25,52 @@ async function getMovies(currentPage) {
   const movies = await axios
     .get(`${POPULAR_MOVIE_REGUEST}?api_key=${API_KEY}&page=${currentPage}`)
     .then(async res => {
+      const genres = await axios
+        .get(
+          `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`
+        )
+        .then(res => res.data.genres);
+      const movies = {
+        genres,
+        movies: await res.data.results,
+      };
       const totalPages = await res.data.total_pages;
       pagination(totalPages, currentPage);
-      return res.data.results;
+
+      const loader = document.querySelector('.loader');
+      loader.classList.toggle('loader__hidden');
+
+      // return res.data.results;
+      return movies;
     });
-  const dataMovies = [];
-  for (const { id } of movies) {
-    const dataMovie = await axios
-      .get(
-        `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`
-      )
-      .then(res => res.data);
-    dataMovies.push(dataMovie);
-  }
-  return dataMovies;
+
+  return movies;
 }
 
-function renderMovies(movies) {
+function renderMovies(moviesObj) {
+  const { genres, movies } = moviesObj;
   const moviesHtml = movies
-    .map(({ poster_path, release_date, title, genres, id }) => {
-      const genre = genres.map(({ name }) => name).join(', ');
+    .map(({ poster_path, release_date, title, genre_ids, id }) => {
+      const genre = genres
+        .reduce((acc, el) => {
+          const { id, name } = el;
+          for (const idFilm of genre_ids) {
+            if (id === idFilm) {
+              acc.push(name);
+            }
+          }
+          return acc;
+        }, [])
+        .join(', ');
+
       return `<li class="films__item" data-id = ${id}>
-    <img src=${IMG_REGUEST + poster_path} alt=${title} class="film_img"/>
+    <img src=${
+      IMG_REGUEST + poster_path
+    } alt=${title} class="film_img dark-theme" loading="lazy"/>
     <p class="film__name">${title}</p>
-    <p class="film__description">${genre} | ${release_date.slice(0, 4)}</p>
+    <p class="film__description">${genre} | ${
+        release_date ? release_date.slice(0, 4) : '2022'
+      }</p>
   </li>`;
     })
     .join('');
@@ -61,7 +82,12 @@ function pagination(totalPages, currentPage) {
   const page = [];
   if (windowWidth >= 768) {
     let numberPage = Number(currentPage) + 7;
-    if (currentPage < 4) {
+    if (totalPages <= 8) {
+      for (let i = 1; i <= totalPages; i += 1) {
+        page.push(`<a id="${i}">${i}</a>`);
+      }
+    } else if (currentPage < 4) {
+      // console.log(push);
       page.push('<a class="back pagination__arrow pagination__arrow_prev" >');
       for (
         let index = 1;
@@ -119,8 +145,9 @@ paginationContainer.addEventListener('click', paginationAdd);
 
 function paginationAdd(e) {
   console.log('тізен');
+  const warning = document.querySelector('.search_warning');
   formInput.value = '';
-  warning.textContent = '';
+  warning.innerHTML = '';
   if (e.target.classList.contains('back')) {
     currentPage -= 1;
     if (currentPage < 1) {
@@ -128,6 +155,8 @@ function paginationAdd(e) {
       return;
     }
     container.innerHTML = '';
+    const loader = document.querySelector('.loader');
+    loader.classList.toggle('loader__hidden');
     getMovies(currentPage).then(renderMovies);
     return;
   }
@@ -138,7 +167,10 @@ function paginationAdd(e) {
       return;
     }
     container.innerHTML = '';
+    const loader = document.querySelector('.loader');
+    loader.classList.toggle('loader__hidden');
     getMovies(currentPage).then(renderMovies);
+
     return;
   }
 
@@ -147,11 +179,15 @@ function paginationAdd(e) {
     return;
   }
   container.innerHTML = '';
+  const loader = document.querySelector('.loader');
+  loader.classList.toggle('loader__hidden');
   getMovies(currentPage).then(renderMovies);
 }
 
 function createMovieGallery(e) {
   e.preventDefault();
+  const loader = document.querySelector('.loader');
+  loader.classList.toggle('loader__hidden');
   const searshQuery = e.currentTarget.elements.searshQuery.value.trim();
   if (!searshQuery) {
     return alert('please enter something');
@@ -170,16 +206,19 @@ function onClearPage() {
 
 function rendeNewPage() {
   tmdbApiService.fetchMovie().then(response => {
+    console.log(response.data.results);
     if (response.data.results.length === 0) {
-      paginationContainer.addEventListener('click', paginationAdd);
+      const warning = document.querySelector('.search_warning');
       formInput.value = '';
+      onClearPage();
       warning.textContent =
-        'Search result not successful. Enter the correct movie name and ';
+        'Search result not successful. Enter the correct movie name';
+
       return;
     }
-    paginationContainer.removeEventListener('click', paginationAdd);
     formInput.value = '';
-    warning.textContent = '';
+    const warning = document.querySelector('.search_warning');
+    warning.innerHTML = '';
     onClearPage();
     const totPages = response.data.total_pages;
     pagination(totPages, tmdbApiService.getpage());
@@ -189,22 +228,21 @@ function rendeNewPage() {
 }
 
 async function fetchSearshedQuery(movies) {
-  const dataMovies = [];
-  for (const { id } of movies) {
-    const dataMovie = await axios
-      .get(
-        `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`
-      )
-      .then(res => res.data);
-    dataMovies.push(dataMovie);
-  }
-  renderMovies(dataMovies);
+  const genres = await axios
+    .get(
+      `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`
+    )
+    .then(res => res.data.genres);
+  const moviesData = {
+    genres,
+    movies,
+  };
+  renderMovies(moviesData);
 }
 
 function onChangePage(e) {
-  console.log('юра');
   formInput.value = '';
-  warning.textContent = '';
+  warning.innerHTML = '';
   if (e.target.classList.contains('no-click')) {
     return;
   }
@@ -216,6 +254,8 @@ function onChangePage(e) {
       return;
     }
     rendeNewPage();
+    const loader = document.querySelector('.loader');
+    loader.classList.toggle('loader__hidden');
     return;
   }
   if (e.target.classList.contains('next')) {
@@ -225,9 +265,13 @@ function onChangePage(e) {
       return;
     }
     rendeNewPage();
+    const loader = document.querySelector('.loader');
+    loader.classList.toggle('loader__hidden');
     return;
   }
 
   tmdbApiService.setPage(Number(e.target.getAttribute('id')));
   rendeNewPage();
+  const loader = document.querySelector('.loader');
+  loader.classList.toggle('loader__hidden');
 }

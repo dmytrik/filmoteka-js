@@ -1,0 +1,183 @@
+const axios = require('axios');
+const API_KEY = '5fe2b2c003e2bf661ee6b8424d931ac2';
+const IMG_REGUEST = 'https://image.tmdb.org/t/p/w500';
+
+const myLibraryEl = document.querySelector('.header__list');
+const filmListEl = document.querySelector('[data-movies]');
+
+const closeBtn = document.querySelector('.close-library-modal');
+const backdropEl = document.querySelector('.library-backdrop');
+const playerEl = document.querySelector('.library-modal-trailer');
+const linkBox = document.querySelector('#modal-div-link');
+const libraryRemoveBtn = document.querySelector('.library-modal-btn');
+
+const watchedEl = localStorage.getItem('STORAGE_KEY_WATCHED');
+const queueEl = localStorage.getItem('STORAGE_KEY_QUEUE');
+let libraryAllEl = '';
+checkedLS();
+
+myLibraryEl.addEventListener('click', checkEventLibrary);
+filmListEl.addEventListener('click', checkEventModal);
+closeBtn.addEventListener('click', closeModal);
+backdropEl.addEventListener('click', closeByBackdrop);
+libraryRemoveBtn.addEventListener('click', deleteFromLibraryAndLS);
+
+function checkedLS() {
+  filmListEl.innerHTML = '';
+  if (localStorage.length === 0) {
+    const marckup = `<span class="film__name">Your library is empty!</span>`;
+    filmListEl.innerHTML = marckup;
+    return;
+  } else if (queueEl === null) {
+    libraryAllEl = JSON.parse(watchedEl);
+    getId();
+  } else if (watchedEl === null) {
+    libraryAllEl = JSON.parse(queueEl);
+    getId();
+  } else {
+    libraryAllEl = JSON.parse(watchedEl).concat(JSON.parse(queueEl));
+    getId();
+  }
+}
+
+function checkEventLibrary(evt) {
+  if (evt.target.innerText === 'MY LIBRARY') {
+    getId();
+  }
+}
+
+function getId() {
+  libraryAllEl.forEach(element => {
+    getElementById(element);
+  });
+}
+
+async function getElementById(id) {
+  const respounse = await axios
+    .get(
+      `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`
+    )
+    .then(respounse => {
+      renderMarckup(respounse.data);
+    });
+}
+
+function renderMarckup(data) {
+  const genres = data.genres.map(el => el.name);
+  const marckup = `<li class="films__item" data-id = ${data.id}>
+      <img src=${IMG_REGUEST + data.poster_path} alt=${
+    data.title
+  } class="film_img"/>
+      <p class="film__name">${data.title}</p>
+      <p class="film__description">${genres} | ${data.release_date.slice(
+    0,
+    4
+  )}</p>
+    </li>`;
+
+  filmListEl.innerHTML += marckup;
+}
+
+function checkEventModal(evt) {
+  const target = evt.target.closest('.films__item');
+  if (target) {
+    const idAttribute = target.getAttribute('data-id');
+    openModal();
+    renderModalLink(idAttribute);
+    getVideoUrlAndRenderPlayer(idAttribute);
+    chekModalBtn(idAttribute);
+  } else {
+    return;
+  }
+}
+
+function openModal() {
+  backdropEl.classList.remove('library-backdrop-is-hiden');
+}
+
+function closeModal() {
+  backdropEl.classList.add('library-backdrop-is-hiden');
+  playerEl.innerHTML = '';
+}
+
+function closeByBackdrop(evt) {
+  console.log('click');
+  if (evt.target.classList.contains('library-backdrop')) {
+    closeModal();
+    backdropEl.removeEventListener('click', closeByBackdrop);
+  }
+}
+
+async function getVideoUrlAndRenderPlayer(movie) {
+  const data = await axios
+    .get(
+      `https://api.themoviedb.org/3/movie/${movie}/videos?api_key=${API_KEY}&language=en-US`
+    )
+    .then(results => {
+      return results.data.results.map(el => {
+        if (el.site === 'YouTube') {
+          const marcup = `<iframe class="library-modal-iframe" data-id = "${movie}" 
+   src="http://www.youtube.com/embed/${el.key}?&autoplay=1"
+   frameborder="0" allowfullscreen></iframe>`;
+
+          playerEl.innerHTML = marcup;
+        }
+      });
+    });
+}
+
+async function renderModalLink(movie) {
+  const respounse = await axios
+    .get(
+      `https://api.themoviedb.org/3/movie/${movie}?api_key=${API_KEY}&language=en-US`
+    )
+    .then(respounse => {
+      const homepage = respounse.data.homepage;
+      return homepage;
+    })
+    .then(homepage => {
+      if (homepage === '') {
+        linkBox.innerHTML = '';
+      } else {
+        const marckup = `<a href="${homepage}" rel=" noopener noreferrer nofollow " target = "blank" class="library-modal-link">HOMEPAGE</a>`;
+        linkBox.innerHTML = marckup;
+      }
+    });
+}
+
+function chekModalBtn(id) {
+  if (watchedEl.includes(id)) {
+    libraryRemoveBtn.innerText = 'REMOVE FROM WATCHED';
+  } else {
+    libraryRemoveBtn.innerText = 'REMOVE FROM QUEUE';
+  }
+}
+
+function deleteFromLibraryAndLS(evt) {
+  const element = backdropEl.querySelector('.library-modal-iframe');
+  const idAttribute = element.getAttribute('data-id');
+  const findEl = document.querySelector(`[data-id="${idAttribute}"]`);
+  findEl.remove();
+
+  if (watchedEl.includes(idAttribute)) {
+    const watchEl = localStorage.getItem('STORAGE_KEY_WATCHED');
+    arraysWatchId = JSON.parse(watchEl);
+    const newWatchArrId = arraysWatchId.filter(item => item !== idAttribute);
+    const newWatchedString = JSON.stringify(newWatchArrId);
+    localStorage.removeItem('STORAGE_KEY_WATCHED');
+    localStorage.setItem('STORAGE_KEY_WATCHED', newWatchedString);
+    // location.reload();
+    closeModal();
+    // checkedLS();
+  } else {
+    const queEl = localStorage.getItem('STORAGE_KEY_QUEUE');
+    arraysQueId = JSON.parse(queEl);
+    const newQueArrId = arraysQueId.filter(item => item !== idAttribute);
+    const newQueueString = JSON.stringify(newQueArrId);
+    localStorage.removeItem('STORAGE_KEY_QUEUE');
+    localStorage.setItem('STORAGE_KEY_QUEUE', newQueueString);
+    // location.reload();
+    closeModal();
+    // checkedLS();
+  }
+}

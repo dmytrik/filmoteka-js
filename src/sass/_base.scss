@@ -10,8 +10,17 @@ body {
   min-width: 320px;
   font-family: 'Roboto', sans-serif;
   margin: 0;
-  color: #ffffff;
-  background-color: #ffffff;
+
+  // transition: all 0.3s;
+  &.dark-theme {
+    color: #ff6b08;
+    background-color: #000000;
+  }
+
+  &.blue-theme {
+    background-color: #0059b8;
+    color: #fed502;
+  }
 }
 
 ul,
@@ -45,7 +54,7 @@ p {
 }
 img {
   display: block;
-  max-width: 100%;
+  width: 100%;
   height: auto;
 }
 
