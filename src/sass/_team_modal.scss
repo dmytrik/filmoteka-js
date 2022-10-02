@@ -130,15 +130,6 @@
     text-align: center;
     position: relative;
     overflow: hidden;
-
-  border-radius: 25px;
-  padding: 20px;
-  margin-bottom: 10px;
-  background-color: #252836;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
->>>>>>> 5acd580a637973e5dfe9df3ffd598cbd65cdd9c5
 }
 
 .our-team .picture {
@@ -164,20 +155,6 @@
     opacity: 0.9;
     transform: scale(3);
     transition: all 0.3s linear 0s;
-
-  content: '';
-  width: 100%;
-  height: 0;
-  border-radius: 50%;
-  background-color: #ea5f5f;
-  position: absolute;
-  bottom: 135%;
-  right: 0;
-  left: 0;
-  opacity: 0.9;
-  transform: scale(3);
-  transition: all 0.3s linear 0s;
-
 }
 
 .our-team:hover .picture::before {
@@ -195,16 +172,6 @@
     top: 0;
     left: 0;
     z-index: -1;
-
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background-color: #ea5f5f;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -1;
 
 }
 
@@ -230,12 +197,6 @@
     padding-top: 5px;
     padding-bottom: 0px;
 
-  display: block;
-  font-size: 12px;
-  color: #4e5052;
-  text-transform: capitalize;
-  padding-top: 5px;
-  padding-bottom: 0px;
 
 }
 
