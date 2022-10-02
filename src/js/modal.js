@@ -81,7 +81,7 @@ function renderFullInformationAboutMovies(informtionAboutMovie) {
       <p class="name">Genre</p>
     </div>
     <div class="value-wrap">
-      <p class='name'><span class='vote_average'>${voteAverageRounding}</span>/<span class='vote_count'>${vote_count}</sapan></p>
+      <p class='name'><span class='vote_average'>${voteAverageRounding}</span>/<span class='vote_count'>${vote_count}</span></p>
       <p class='value p'>${popularity}</p>
       <p class='value '>${original_title}</p>
       <p class='value '>${genresString}</p>
