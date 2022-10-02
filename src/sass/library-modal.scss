@@ -1,0 +1,132 @@
+.library-backdrop {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  transition: transform 500ms;
+}
+
+.library-backdrop.library-backdrop-is-hiden .library-modal {
+  transform: scale(0.2);
+}
+
+.library-modal {
+  position: absolute;
+  position: fixed;
+  // max-width: 320px;
+  // height: 240px;
+  width: 800px;
+  height: 500px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  padding: 25px 12px;
+  // padding: 12px 8px;
+  background: #fff;
+  margin-bottom: 200px;
+  border-radius: 5px;
+  transition: transform 500ms;
+  // @media screen and(min-width: 480px) {
+  //   width: 450px;
+  //   height: 200px;
+  // }
+}
+
+.close-library-modal {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  top: 0px;
+  right: 0px;
+  width: auto;
+  height: auto;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.close-library-modal:hover {
+  background-color: rgb(238, 69, 69);
+}
+
+.library-modal-img {
+  color: rgb(15, 14, 14);
+  // width: 10px;
+  // height: 10px;
+  width: 24px;
+  height: 24px;
+  transition: transform 500ms;
+}
+
+.library-modal-trailer {
+  width: auto;
+  height: 380px;
+  margin: 0 auto;
+  border-radius: 5px;
+}
+
+.library-modal-box {
+  display: flex;
+  // margin-top: 7px;
+  margin-top: 20px;
+}
+
+.library-modal-link {
+  color: red;
+  // font-size: 11px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  // width: 100px;
+  // height: 25px;
+  width: 150px;
+  height: 50px;
+  // margin-right: 20px;
+  margin-right: 40px;
+  background-color: black;
+  border-radius: 4px;
+  transition: transform 500ms;
+}
+
+.library-modal-link:hover {
+  transform: scale(1.1);
+  color: #fff;
+}
+
+.library-modal-btn {
+  cursor: pointer;
+  display: block;
+  font-size: 16px;
+  // font-size: 11px;
+  // width: 180px;
+  // height: 25px;
+  width: 150px;
+  height: 50px;
+  // margin-right: 0px;
+  margin-right: 60px;
+  background-color: orangered;
+  border: none;
+  border-radius: 4px;
+  transition: transform 500ms;
+}
+
+.library-modal-btn:hover {
+  transform: scale(1.1);
+  background-color: rgb(134, 51, 23);
+  color: white;
+}
+
+.library-backdrop-is-hiden {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.library-modal-iframe {
+  border-radius: 5px;
+  width: 775px;
+  height: 380px;
+}
