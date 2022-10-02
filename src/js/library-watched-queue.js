@@ -1,9 +1,9 @@
 const axios = require('axios');
 const API_KEY = '5fe2b2c003e2bf661ee6b8424d931ac2';
-const IMG_REGUEST = 'https://image.tmdb.org/t/p/original';
+const IMG_REGUEST = 'https://image.tmdb.org/t/p/w342';
 
-const btnWatched = document.querySelector('.watched_btn');
-const btnQueue = document.querySelector('.queue_btn');
+const btnWatched = document.querySelector('.header__library-button-watch');
+const btnQueue = document.querySelector('.header__library-button-queue');
 const moviesList = document.querySelector('[data-movies]');
 let parseFilm = [];
 
@@ -11,7 +11,8 @@ btnWatched.addEventListener('click', onLoadWatched);
 btnQueue.addEventListener('click', onLoadQueue);
 
 function onLoadWatched() {
-  btnWatched.classList.toggle('btn-color-change');
+  btnWatched.classList.add('btn-color-change');
+  btnQueue.classList.remove('btn-color-change');
   moviesList.innerHTML = '';
   const filmsWatched = localStorage.getItem('STORAGE_KEY_WATCHED');
   parseFilm = JSON.parse(filmsWatched);
@@ -25,7 +26,8 @@ function onLoadWatched() {
 }
 
 function onLoadQueue() {
-  btnQueue.classList.toggle('btn-color-change');
+  btnQueue.classList.add('btn-color-change');
+  btnWatched.classList.remove('btn-color-change');
   moviesList.innerHTML = '';
   const filmsQueue = localStorage.getItem('STORAGE_KEY_QUEUE');
   parseFilm = JSON.parse(filmsQueue);
