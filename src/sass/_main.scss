@@ -48,6 +48,17 @@
 
 .film_img {
   border-radius: 5px;
+  transition: all 0.2s;
+  &.dark-theme:hover {
+    cursor: pointer;
+    box-shadow: 0px 8px 43px rgba(255, 107, 1, 0.6);
+    transform: scale(1.02);
+  }
+  &.blue-theme:hover {
+    cursor: pointer;
+    box-shadow: 0px 8px 43px rgb(0, 0, 0);
+    transform: scale(1.02);
+  }
 }
 
 .film__name {
@@ -61,7 +72,8 @@
 
   text-transform: uppercase;
 
-  color: #000000;
+  color: #fff;
+
   @media screen and(max-width: 768px) {
     font-size: 12px;
     line-height: 16px;
@@ -80,7 +92,9 @@
   line-height: 24px;
   /* identical to box height, or 120% */
 
-  color: #ff6b08;
+  &.blue {
+    color: #fed502;
+  }
   @media screen and(max-width: 768px) {
     font-size: 12px;
     line-height: 16px;
@@ -103,9 +117,10 @@
 }
 
 .pagination a {
+  cursor: pointer;
   width: 40px;
   height: 40px;
-  color: #000;
+  color: #fff;
   float: left;
 
   font-family: Roboto;
@@ -138,7 +153,7 @@
 }
 
 .pagination a:hover:not(.active) {
-  background-color: silver;
+  background-color: rgba(192, 192, 192, 0.376);
   color: #fff;
   border-radius: 5px;
 }
