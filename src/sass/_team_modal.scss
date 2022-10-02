@@ -44,26 +44,6 @@
   }
 }
 
-
-@media screen and (min-width: 768px) {
-  .backdrop {
-    overflow-y: hidden;
-  }
-
-  .modal {
-    overflow-y: hidden;
-    width: 600px;
-    height: 450px;
-  }
-}
-
-@media screen and (min-width: 1200px) {
-  .modal {
-    width: 800px;
-    height: 710px;
-  }
-}
-
 .modal {
   box-sizing: border-box;
   background: linear-gradient(rgba(0, 55, 255, 0.52), #fbff00);
@@ -76,13 +56,6 @@
   border-radius: 20px;
 }
 
-
-@media screen and (min-width:1200px) {
-    .modal {
-        width: 800px;
-        height: 730px;
-    }
-}
 .title-team {
     margin-left: auto;
     margin-right: auto;
@@ -103,7 +76,7 @@
 @media screen and (min-width: 1200px) {
   .modal {
     width: 800px;
-    height: 700px;
+    height: 730px;
   }
 }
 .title-team {
@@ -189,15 +162,12 @@
 }
 
 .our-team .title {
-
     display: block;
     font-size: 12px;
     color: #48507a;
     text-transform: capitalize;
     padding-top: 5px;
     padding-bottom: 0px;
-
-
 }
 
 .our-team .social {
@@ -301,5 +271,4 @@
 
 .footer-btn-text-click {
   color: white;
-}
 }
