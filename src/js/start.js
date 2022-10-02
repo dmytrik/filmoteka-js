@@ -4,6 +4,7 @@ import TmdbApiService from './tmdb-api-service';
 
 let currentPage = 1;
 let totPages = null;
+let isFilter = null;
 const container = document.querySelector('.films__list');
 const paginationContainer = document.querySelector('#pagination');
 const moviesList = document.querySelector('[data-movies]');
@@ -20,10 +21,29 @@ const tmdbApiService = new TmdbApiService();
 getMovies(currentPage).then(renderMovies);
 
 formEl.addEventListener('submit', createMovieGallery);
+document.querySelector('.form-filter-reset'), addEventListener('submit', e => {
+  isFilter = true
+  getMovies(1).then(renderMovies)
+  const loader = document.querySelector('.loader');
+  loader.classList.toggle('loader__hidden');
+})
+document.getElementById('filter-form').addEventListener("change", e => {
+  isFilter = true
+  getMovies(currentPage).then(renderMovies)
+  const loader = document.querySelector('.loader');
+  loader.classList.toggle('loader__hidden');
+})
+function getFilteredData(currentPage) {
+  const year = document.getElementById('year')
+  const sortBy = document.getElementById('sort-by')
+  const genre = document.getElementById('genre')
+  if (genre.value === "" && year.value === "" && sortBy.value === "") return
+  return `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=${genre.value}&primary_release_year=${year.value}&sort_by=${sortBy.value}&language=en-US&page=${currentPage}`
+}
 
 async function getMovies(currentPage) {
   const movies = await axios
-    .get(`${POPULAR_MOVIE_REGUEST}?api_key=${API_KEY}&page=${currentPage}`)
+  .get(`${isFilter ? getFilteredData(currentPage) : `${POPULAR_MOVIE_REGUEST}?api_key=${API_KEY}&page=${currentPage}`}`)
     .then(async res => {
       const genres = await axios
         .get(
