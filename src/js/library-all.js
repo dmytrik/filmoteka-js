@@ -19,7 +19,7 @@ checkedLS();
 myLibraryEl.addEventListener('click', checkEventLibrary);
 filmListEl.addEventListener('click', checkEventModal);
 closeBtn.addEventListener('click', closeModal);
-// backdropEl.addEventListener('click', closeByBackdrop);
+backdropEl.addEventListener('click', closeByBackdrop);
 libraryRemoveBtn.addEventListener('click', deleteFromLibraryAndLS);
 
 function checkedLS() {
@@ -100,15 +100,13 @@ function closeModal() {
   playerEl.innerHTML = '';
 }
 
-// function closeByBackdrop(evt) {
-//   console.log('click');
-//   if (evt.target.classList[0] === 'library-backdrop') {
-//     closeModal();
-//   } else {
-//     return;
-//   }
-//   backdropEl.removeEventListener('click', closeByBackdrop);
-// }
+function closeByBackdrop(evt) {
+  console.log('click');
+  if (evt.target.classList.contains('library-backdrop')) {
+    closeModal();
+    backdropEl.removeEventListener('click', closeByBackdrop);
+  }
+}
 
 async function getVideoUrlAndRenderPlayer(movie) {
   const data = await axios
