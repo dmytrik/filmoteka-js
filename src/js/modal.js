@@ -1,17 +1,16 @@
 const axios = require('axios');
-
+import { addEventsOnModalBtn } from './local-storage';
 const API_KEY = '5fe2b2c003e2bf661ee6b8424d931ac2';
 const IMG_REGUEST = 'https://image.tmdb.org/t/p/original';
-
 const closeModal = document.querySelector('.close-modal');
 const moviesList = document.querySelector('[data-movies]');
 const modalRef = document.querySelector('.backdrop_modal_film');
 const modalConteinerRef = document.querySelector('.modal-conteiner');
 const body = document.querySelector('body');
-
 closeModal.addEventListener('click', onCloseModal);
 moviesList.addEventListener('click', openModal);
 modalRef.addEventListener('click', clickModal);
+
 
 function clickModal(event) {
   if (event.currentTarget === event.target) {
@@ -29,6 +28,8 @@ async function getFullMoveInformation(id) {
 }
 
 function renderFullInformationAboutMovies(informtionAboutMovie) {
+  let watchedText = 'add to watched';
+  let queueText = 'add to queue';
   const {
     poster_path,
     title,
@@ -46,8 +47,25 @@ function renderFullInformationAboutMovies(informtionAboutMovie) {
   }
   const genresString = genresArr.join(', ');
   const voteAverageRounding = vote_average.toFixed(1);
+// Умова фіксації тексту кнопки  опираючись на наявність фільму в local storage
+  const localStorageWatchedId = JSON.parse(localStorage.getItem("STORAGE_KEY_WATCHED"));
+  if (localStorageWatchedId === null) {
+     watchedText = 'add to watched';
+  }
+   else if (localStorageWatchedId.some(value => value == id)) {
+     watchedText = 'remove from watched';
+  }
+
+  const localStorageQueueId = JSON.parse(localStorage.getItem("STORAGE_KEY_QUEUE"));
+  if (localStorageQueueId === null) {
+     queueText = 'add to queue';
+  }
+   else if (localStorageQueueId.some(value => value == id)) {
+     queueText = 'remove from queue';
+  } 
+// Умова фіксації тексту кнопки  опираючись на наявність фільму в local storage
   const markapInformation = `<div class="img-wrap">
-  <img src="${IMG_REGUEST + poster_path}" alt="${title}" calss="img" />
+  <img src="${IMG_REGUEST + poster_path}" alt="${title}" class="img" />
 </div>
 <div>
   <h2 class="modal-title">${title}</h2>
@@ -71,19 +89,19 @@ function renderFullInformationAboutMovies(informtionAboutMovie) {
   </div>
 
   <div class="button-wrap">
-    <button type="button" class="btn add-to-watched" data-watched data-id = ${id}>add to watched</button>
-    <button type="button" class="btn add-to-queue" data-queue data-id = ${id}>add to queue</button>
+    <button type="button" class="btn add-to-watched" data-watched data-id = ${id}>${watchedText}</button>
+    <button type="button" class="btn add-to-queue" data-queue data-id = ${id}>${queueText}</button>
   </div>
 </div>
 `;
   modalConteinerRef.insertAdjacentHTML('afterbegin', markapInformation);
+  
 }
 
 function onCloseModal(event) {
   window.removeEventListener('keydown', onEscClose);
   modalRef.classList.add('is-hidden');
   body.classList.remove('no-scroll');
-
   modalConteinerRef.innerHTML = '';
 }
 
@@ -97,7 +115,8 @@ function openModal(event) {
   }
   const id = li.attributes[1].value;
   modalRef.classList.remove('is-hidden');
-  getFullMoveInformation(id).then(renderFullInformationAboutMovies);
+  getFullMoveInformation(id).then(renderFullInformationAboutMovies).then(addEventsOnModalBtn);
+  
 }
 
 function onEscClose(event) {
