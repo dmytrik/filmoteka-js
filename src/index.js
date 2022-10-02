@@ -4,3 +4,4 @@ import './js/tmdb-api-service';
 import './js/team-modal';
 import './js/local-storage';
 import './js/modal';
+import './js/change-theme-color';

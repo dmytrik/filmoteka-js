@@ -1,0 +1,46 @@
+body {
+  margin: 0;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: 'Inter', sans-serif;
+}
+.theme-btn {
+  width: 3em;
+  height: 3em;
+  padding: 0.5em;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+}
+.toggle-container {
+  position: relative;
+}
+.theme-btn img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+.theme-btn.light {
+  display: none;
+}
+
+.dark .theme-btn.dark {
+  display: none;
+}
+
+.dark .theme-btn.light {
+  display: block;
+}
+.theme-btn.light {
+  display: none;
+}
+
+.dark .theme-btn.light {
+  display: block;
+  background-color: #fff;
+}
+
+.dark .theme-btn.dark {
+  display: none;
+}
