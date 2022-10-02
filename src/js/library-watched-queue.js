@@ -58,12 +58,13 @@ async function getElementById(id) {
 }
 
 function renderMovies(data) {
+  const genre = data.genres.map(el => el.name).join(', ');
   const marckup = `<li class="films__item" data-id = ${data.id}>
       <img src=${IMG_REGUEST + data.poster_path} alt=${
     data.title
   } class="film_img"/>
       <p class="film__name">${data.title}</p>
-      <p class="film__description">${data.genre} | ${data.release_date.slice(
+      <p class="film__description">${genre} | ${data.release_date.slice(
     0,
     4
   )}</p>
