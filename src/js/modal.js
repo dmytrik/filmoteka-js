@@ -65,10 +65,10 @@ function renderFullInformationAboutMovies(informtionAboutMovie) {
    else if (localStorageQueueId.some(value => value == id)) {
      queueText = 'remove from queue';
   } 
-  const markapInformation = `<div class="img-wrap">
-  <img src="${IMG_REGUEST + poster_path}" alt="${title}" class="img" />
-</div>
-<div>
+//   const markapInformation = `<div class="img-wrap">
+//   <img src="${IMG_REGUEST + poster_path}" alt="${title}" class="img" />
+// </div>
+// <div>
   const markapInformation = `
   <img src="${IMG_REGUEST + poster_path}" alt="${title}" class="modal-img" />
 <div class="right-wrap">
