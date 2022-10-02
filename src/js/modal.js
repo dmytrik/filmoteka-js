@@ -65,39 +65,39 @@ function renderFullInformationAboutMovies(informtionAboutMovie) {
    else if (localStorageQueueId.some(value => value == id)) {
      queueText = 'remove from queue';
   } 
-  const markapInformation = `<div class="img-wrap">
-  <img src="${IMG_REGUEST + poster_path}" alt="${title}" class="img" />
-</div>
-<div>
-  const markapInformation = `
-  <img src="${IMG_REGUEST + poster_path}" alt="${title}" class="modal-img" />
-<div class="right-wrap">
-  <h2 class="modal-title">${title}</h2>
-  <div class="general-wrap">
-    <div class="name-wrap">
-      <p class="name">Vote / Votes</p>
-      <p class="name">Popularity</p>
-      <p class="name">Original Title</p>
-      <p class="name">Genre</p>
-    </div>
-    <div class="value-wrap">
-      <p class='name'><span class='vote_average'>${voteAverageRounding}</span>/<span class='vote_count'>${vote_count}</span></p>
-      <p class='value p'>${popularity}</p>
-      <p class='value '>${original_title}</p>
-      <p class='value '>${genresString}</p>
-    </div>
-  </div>
-  <div class='text-wrap'>
-    <p class='about'>About</p>
-    <p class='overview'>${overview}</p>
-  </div>
+//   const markapInformation = `<div class="img-wrap">
+//   <img src="${IMG_REGUEST + poster_path}" alt="${title}" class="img" />
+// </div>
+// <div>
+//   const markapInformation = `
+//   <img src="${IMG_REGUEST + poster_path}" alt="${title}" class="modal-img" />
+// <div class="right-wrap">
+//   <h2 class="modal-title">${title}</h2>
+//   <div class="general-wrap">
+//     <div class="name-wrap">
+//       <p class="name">Vote / Votes</p>
+//       <p class="name">Popularity</p>
+//       <p class="name">Original Title</p>
+//       <p class="name">Genre</p>
+//     </div>
+//     <div class="value-wrap">
+//       <p class='name'><span class='vote_average'>${voteAverageRounding}</span>/<span class='vote_count'>${vote_count}</span></p>
+//       <p class='value p'>${popularity}</p>
+//       <p class='value '>${original_title}</p>
+//       <p class='value '>${genresString}</p>
+//     </div>
+//   </div>
+//   <div class='text-wrap'>
+//     <p class='about'>About</p>
+//     <p class='overview'>${overview}</p>
+//   </div>
 
-  <div class="button-wrap">
-    <button type="button" class="btn add-to-watched" data-watched data-id = ${id}>${watchedText}</button>
-    <button type="button" class="btn add-to-queue" data-queue data-id = ${id}>${queueText}</button>
-  </div>
-</div>
-`;
+//   <div class="button-wrap">
+//     <button type="button" class="btn add-to-watched" data-watched data-id = ${id}>${watchedText}</button>
+//     <button type="button" class="btn add-to-queue" data-queue data-id = ${id}>${queueText}</button>
+//   </div>
+// </div>
+// `;
   modalConteinerRef.insertAdjacentHTML('afterbegin', markapInformation);
   
 }
