@@ -71,7 +71,7 @@ function renderFullInformationAboutMovies(informtionAboutMovie) {
 <div>
   const markapInformation = `
   <img src="${IMG_REGUEST + poster_path}" alt="${title}" class="modal-img" />
-// <div class="right-wrap">
+<div class="right-wrap">
   <h2 class="modal-title">${title}</h2>
   <div class="general-wrap">
     <div class="name-wrap">
@@ -96,7 +96,7 @@ function renderFullInformationAboutMovies(informtionAboutMovie) {
     <button type="button" class="btn add-to-watched" data-watched data-id = ${id}>${watchedText}</button>
     <button type="button" class="btn add-to-queue" data-queue data-id = ${id}>${queueText}</button>
   </div>
-// </div>
+</div>
 `;
   modalConteinerRef.insertAdjacentHTML('afterbegin', markapInformation);
   
