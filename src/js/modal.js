@@ -50,7 +50,6 @@ function renderFullInformationAboutMovies(informtionAboutMovie) {
   }
   const genresString = genresArr.join(', ');
   const voteAverageRounding = vote_average.toFixed(1);
-// Умова фіксації тексту кнопки  опираючись на наявність фільму в local storage
   const localStorageWatchedId = JSON.parse(localStorage.getItem("STORAGE_KEY_WATCHED"));
   if (localStorageWatchedId === null) {
      watchedText = 'add to watched';
@@ -66,7 +65,6 @@ function renderFullInformationAboutMovies(informtionAboutMovie) {
    else if (localStorageQueueId.some(value => value == id)) {
      queueText = 'remove from queue';
   } 
-// Умова фіксації тексту кнопки  опираючись на наявність фільму в local storage
   const markapInformation = `<div class="img-wrap">
   <img src="${IMG_REGUEST + poster_path}" alt="${title}" class="img" />
 </div>
