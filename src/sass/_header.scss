@@ -179,8 +179,7 @@ input[type='search']::-webkit-search-results-button,
 input[type='search']::-webkit-search-results-decoration {
   display: none;
 }
-
-button[type='submit'] {
+.type-submit-button {
   text-indent: -999px;
   overflow: hidden;
   width: 12px;
