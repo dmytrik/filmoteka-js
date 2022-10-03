@@ -19,7 +19,7 @@ checkedLS();
 myLibraryEl.addEventListener('click', checkEventLibrary);
 filmListEl.addEventListener('click', checkEventModal);
 closeBtn.addEventListener('click', closeModal);
-backdropEl.addEventListener('click', closeByBackdrop);
+
 libraryRemoveBtn.addEventListener('click', deleteFromLibraryAndLS);
 
 function checkedLS() {
@@ -93,18 +93,21 @@ function checkEventModal(evt) {
 
 function openModal() {
   backdropEl.classList.remove('library-backdrop-is-hiden');
+  window.addEventListener('keydown', closeModal);
+  backdropEl.addEventListener('click', closeModal);
 }
 
-function closeModal() {
-  backdropEl.classList.add('library-backdrop-is-hiden');
-  playerEl.innerHTML = '';
-}
-
-function closeByBackdrop(evt) {
-  console.log('click');
-  if (evt.target.classList.contains('library-backdrop')) {
-    closeModal();
-    backdropEl.removeEventListener('click', closeByBackdrop);
+function closeModal(e) {
+  if (
+    e.target.classList.contains('library-backdrop') ||
+    e.code === 'Escape' ||
+    e.target.classList.contains('close-library-modal') ||
+    e.target.classList.contains('library-modal-img')
+  ) {
+    backdropEl.classList.add('library-backdrop-is-hiden');
+    playerEl.innerHTML = '';
+    window.removeEventListener('keydown', closeModal);
+    backdropEl.removeEventListener('click', closeModal);
   }
 }
 

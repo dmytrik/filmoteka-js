@@ -2,6 +2,7 @@ const axios = require('axios');
 
 import TmdbApiService from './tmdb-api-service';
 
+let isTizenPag = true;
 let currentPage = 1;
 let totPages = null;
 let isFilter = null;
@@ -21,24 +22,41 @@ const tmdbApiService = new TmdbApiService();
 getMovies(currentPage).then(renderMovies);
 
 formEl.addEventListener('submit', createMovieGallery);
-document.querySelector('.form-filter-reset'),
-  addEventListener('submit', e => {
-    isFilter = true;
-    getMovies(1).then(renderMovies);
-    const loader = document.querySelector('.loader');
-    loader.classList.toggle('loader__hidden');
-  });
-document.getElementById('filter-form').addEventListener('change', e => {
-  isFilter = true;
+document.querySelector('.form-filter-reset').addEventListener('submit', e => {
+  e.preventDefault();
+  warning.textContent = '';
+  if (!isTizenPag) {
+    paginationContainer.addEventListener('click', paginationAdd);
+    paginationContainer.removeEventListener('click', onChangePage);
+  }
+  isFilter = false;
+  currentPage = 1;
   getMovies(currentPage).then(renderMovies);
   const loader = document.querySelector('.loader');
-  loader.classList.toggle('loader__hidden');
+  loader.classList.remove('loader__hidden');
+});
+document.getElementById('filter-form').addEventListener('change', e => {
+  isFilter = true;
+  warning.textContent = '';
+  if (!isTizenPag) {
+    paginationContainer.addEventListener('click', paginationAdd);
+    paginationContainer.removeEventListener('click', onChangePage);
+  }
+  currentPage = 1;
+  getMovies(currentPage).then(renderMovies);
+  const loader = document.querySelector('.loader');
+  loader.classList.remove('loader__hidden');
 });
 function getFilteredData(currentPage) {
   const year = document.getElementById('year');
   const sortBy = document.getElementById('sort-by');
   const genre = document.getElementById('genre');
-  if (genre.value === '' && year.value === '' && sortBy.value === '') return;
+  if (genre.value === '' && sortBy.value === '' && year.value === '') {
+    isFilter = false;
+    currentPage = 1;
+    getMovies(currentPage).then(renderMovies);
+    return;
+  }
   return `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=${genre.value}&primary_release_year=${year.value}&sort_by=${sortBy.value}&language=en-US&page=${currentPage}`;
 }
 
@@ -52,6 +70,10 @@ async function getMovies(currentPage) {
       }`
     )
     .then(async res => {
+      const checkData = await res.data;
+      if (typeof checkData === 'string') {
+        return;
+      }
       const genres = await axios
         .get(
           `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`
@@ -65,7 +87,7 @@ async function getMovies(currentPage) {
       pagination(totalPages, currentPage);
 
       const loader = document.querySelector('.loader');
-      loader.classList.toggle('loader__hidden');
+      loader.classList.add('loader__hidden');
 
       // return res.data.results;
       return movies;
@@ -75,6 +97,9 @@ async function getMovies(currentPage) {
 }
 
 function renderMovies(moviesObj) {
+  if (!moviesObj) {
+    return;
+  }
   const { genres, movies } = moviesObj;
   const moviesHtml = movies
     .map(({ poster_path, release_date, title, genre_ids, id }) => {
@@ -183,7 +208,7 @@ function paginationAdd(e) {
     }
     container.innerHTML = '';
     const loader = document.querySelector('.loader');
-    loader.classList.toggle('loader__hidden');
+    loader.classList.remove('loader__hidden');
     getMovies(currentPage).then(renderMovies);
     return;
   }
@@ -195,7 +220,7 @@ function paginationAdd(e) {
     }
     container.innerHTML = '';
     const loader = document.querySelector('.loader');
-    loader.classList.toggle('loader__hidden');
+    loader.classList.remove('loader__hidden');
     getMovies(currentPage).then(renderMovies);
 
     return;
@@ -214,7 +239,7 @@ function paginationAdd(e) {
 function createMovieGallery(e) {
   e.preventDefault();
   const loader = document.querySelector('.loader');
-  loader.classList.toggle('loader__hidden');
+  loader.classList.remove('loader__hidden');
   const searshQuery = e.currentTarget.elements.searshQuery.value.trim();
   if (!searshQuery) {
     return alert('please enter something');
@@ -222,8 +247,7 @@ function createMovieGallery(e) {
   tmdbApiService.query = searshQuery;
   tmdbApiService.resetPage();
   rendeNewPage();
-  paginationContainer.removeEventListener('click', paginationAdd);
-  paginationContainer.addEventListener('click', onChangePage);
+  isTizenPag = false;
 }
 
 function onClearPage() {
@@ -233,8 +257,11 @@ function onClearPage() {
 
 function rendeNewPage() {
   tmdbApiService.fetchMovie().then(response => {
-    console.log(response.data.results);
+    const loader = document.querySelector('.loader');
+    loader.classList.add('loader__hidden');
     if (response.data.results.length === 0) {
+      paginationContainer.addEventListener('click', paginationAdd);
+      paginationContainer.removeEventListener('click', onChangePage);
       const warning = document.querySelector('.search_warning');
       formInput.value = '';
       onClearPage();
@@ -242,6 +269,13 @@ function rendeNewPage() {
         'Search result not successful. Enter the correct movie name';
 
       return;
+    }
+    if (isTizenPag) {
+      paginationContainer.addEventListener('click', paginationAdd);
+      paginationContainer.removeEventListener('click', onChangePage);
+    } else {
+      paginationContainer.removeEventListener('click', paginationAdd);
+      paginationContainer.addEventListener('click', onChangePage);
     }
     formInput.value = '';
     const warning = document.querySelector('.search_warning');
@@ -268,12 +302,15 @@ async function fetchSearshedQuery(movies) {
 }
 
 function onChangePage(e) {
+  console.log('юра');
   formInput.value = '';
   warning.innerHTML = '';
   if (e.target.classList.contains('no-click')) {
     return;
   }
   if (e.target.classList.contains('back')) {
+    const loader = document.querySelector('.loader');
+    loader.classList.remove('loader__hidden');
     console.log(tmdbApiService.getpage());
     tmdbApiService.decrementPage();
     if (tmdbApiService.getpage() < 1) {
@@ -281,24 +318,26 @@ function onChangePage(e) {
       return;
     }
     rendeNewPage();
-    const loader = document.querySelector('.loader');
-    loader.classList.toggle('loader__hidden');
+    // const loader = document.querySelector('.loader');
+    // loader.classList.toggle('loader__hidden');
     return;
   }
   if (e.target.classList.contains('next')) {
+    const loader = document.querySelector('.loader');
+    loader.classList.remove('loader__hidden');
     tmdbApiService.incrementPage();
     if (tmdbApiService.getpage() > totPages) {
       tmdbApiService.setPage(totPages);
       return;
     }
     rendeNewPage();
-    const loader = document.querySelector('.loader');
-    loader.classList.toggle('loader__hidden');
+    // const loader = document.querySelector('.loader');
+    // loader.classList.toggle('loader__hidden');
     return;
   }
 
   tmdbApiService.setPage(Number(e.target.getAttribute('id')));
   rendeNewPage();
   const loader = document.querySelector('.loader');
-  loader.classList.toggle('loader__hidden');
+  loader.classList.remove('loader__hidden');
 }
