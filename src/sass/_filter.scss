@@ -35,10 +35,7 @@
     margin-bottom: 10px;
   }
 }
-.filter_select-genre * {
-  border-radius: 10px;
-  background-color: #cc0216;
-}
+
 .filter__option {
   color: #cc0216;
 }
@@ -74,14 +71,6 @@
     margin-bottom: 20px;
     width: 150px;
   }
-}
-
-.filter_select-genre option,
-.filter_select-year option,
-.filter_select-sort option {
-  border: 10px solid green;
-  background: red;
-  color: #fff;
 }
 
 .form-filter-reset {

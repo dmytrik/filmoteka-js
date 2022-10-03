@@ -25,8 +25,10 @@ libraryRemoveBtn.addEventListener('click', deleteFromLibraryAndLS);
 
 function checkedLS() {
   filmListEl.innerHTML = '';
-  if (localStorage.length === 0) {
-    const marckup = `<span class="film__name">Your library is empty!</span>`;
+  // console.log(localStorage.length);
+
+  if (queueEl === null && watchedEl === null) {
+    const marckup = `<div class="library__empty-container"><div class="library__empty"><div class="left__eye"></div><div class="right__eye"></div></div><p class="library__text-white">Your library is <span class="library__text-red">empty!</span></p></div>`;
     filmListEl.innerHTML = marckup;
     return;
   } else if (queueEl === null) {
@@ -48,6 +50,9 @@ function checkEventLibrary(evt) {
 }
 
 function getId() {
+  // if (libraryAllEl.length === 0) {
+  //   return;
+  // }
   libraryAllEl.forEach(element => {
     getElementById(element);
   });

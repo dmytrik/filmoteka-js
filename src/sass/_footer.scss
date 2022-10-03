@@ -1,8 +1,19 @@
 .footer {
-  background-color: #f7f7f7;
+  background-color: #000;
+  border-top: 1px solid rgba(255, 255, 255, 0.228);
   position: fixed;
   bottom: 0;
   width: 100%;
+
+  &.dark-theme {
+    background-color: #000;
+    border-top: 1px solid rgba(255, 255, 255, 0.228);
+  }
+
+  &.blue-theme {
+    background-color: #0059b8;
+    color: #fed502;
+  }
 }
 
 .footer__container {
@@ -41,7 +52,7 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 19px;
-  color: #545454;
+  color: #fff;
   @media screen and(max-width: 550px) {
     font-size: 14px;
   }
