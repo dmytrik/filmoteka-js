@@ -1,5 +1,5 @@
 const axios = require('axios');
-
+import imageURL from '../images/oops.jpg';
 import TmdbApiService from './tmdb-api-service';
 
 let isTizenPag = true;
@@ -117,7 +117,7 @@ function renderMovies(moviesObj) {
 
       return `<li class="films__item" data-id = ${id}>
     <img src=${
-      IMG_REGUEST + poster_path
+      poster_path ? IMG_REGUEST + poster_path : imageURL
     } alt=${title} class="film_img dark-theme" loading="lazy"/>
     <p class="film__name">${title}</p>
     <p class="film__description">${genre} | ${

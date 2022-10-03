@@ -1,10 +1,10 @@
 const axios = require('axios');
+import imageURL from '../images/oops.jpg';
 import { addEventsOnModalBtn } from './local-storage';
 const API_KEY = '5fe2b2c003e2bf661ee6b8424d931ac2';
 
-
 const IMG_REGUEST = 'https://image.tmdb.org/t/p/w342';
-let movieId = null
+let movieId = null;
 const closeModal = document.querySelector('.close-modal');
 const moviesList = document.querySelector('[data-movies]');
 const modalRef = document.querySelector('.backdrop_modal_film');
@@ -13,7 +13,6 @@ const body = document.querySelector('body');
 closeModal.addEventListener('click', onCloseModal);
 moviesList.addEventListener('click', openModal);
 modalRef.addEventListener('click', clickModal);
-
 
 function clickModal(event) {
   if (event.currentTarget === event.target) {
@@ -50,19 +49,21 @@ function renderFullInformationAboutMovies(informtionAboutMovie) {
   }
   const genresString = genresArr.join(', ');
   const voteAverageRounding = vote_average.toFixed(1);
-  const localStorageWatchedId = JSON.parse(localStorage.getItem("STORAGE_KEY_WATCHED"));
+  const localStorageWatchedId = JSON.parse(
+    localStorage.getItem('STORAGE_KEY_WATCHED')
+  );
   if (localStorageWatchedId === null) {
     watchedText = 'add to watched';
-  }
-  else if (localStorageWatchedId.some(value => value == id)) {
+  } else if (localStorageWatchedId.some(value => value == id)) {
     watchedText = 'remove from watched';
   }
 
-  const localStorageQueueId = JSON.parse(localStorage.getItem("STORAGE_KEY_QUEUE"));
+  const localStorageQueueId = JSON.parse(
+    localStorage.getItem('STORAGE_KEY_QUEUE')
+  );
   if (localStorageQueueId === null) {
     queueText = 'add to queue';
-  }
-  else if (localStorageQueueId.some(value => value == id)) {
+  } else if (localStorageQueueId.some(value => value == id)) {
     queueText = 'remove from queue';
   }
   //   const markapInformation = `<div class="img-wrap">
@@ -70,7 +71,9 @@ function renderFullInformationAboutMovies(informtionAboutMovie) {
   // </div>
   // <div>
   const markapInformation = `
-  <img src="${IMG_REGUEST + poster_path}" alt="${title}" class="modal-img" />
+  <img src=${
+    poster_path ? IMG_REGUEST + poster_path : imageURL
+  } alt="${title}" class="modal-img" />
 <div class="right-wrap">
   <h2 class="modal-title">${title}</h2>
   <div class="general-wrap">
@@ -99,7 +102,6 @@ function renderFullInformationAboutMovies(informtionAboutMovie) {
 </div>
 `;
   modalConteinerRef.insertAdjacentHTML('afterbegin', markapInformation);
-
 }
 
 function onCloseModal(event) {
@@ -119,32 +121,12 @@ function openModal(event) {
   }
   const id = li.attributes[1].value;
   modalRef.classList.remove('is-hidden');
-  movieId = id
-  getFullMoveInformation(id).then(renderFullInformationAboutMovies).then(addEventsOnModalBtn);
-
+  movieId = id;
+  getFullMoveInformation(id)
+    .then(renderFullInformationAboutMovies)
+    .then(addEventsOnModalBtn);
 }
 
 function onEscClose(event) {
   if (event.code === 'Escape') onCloseModal();
 }
-document.querySelector(".modal-conteiner").addEventListener("click", async e => {
-  const img = e.target.closest(".modal-img")
-  if (img === null) return
-  img.remove()
-  const iframe = document.createElement("iframe")
-  iframe.setAttribute("src", await getVideoUrl(movieId))
-  iframe.classList.add("iframe-modal")
-  modalConteinerRef.insertAdjacentElement("afterbegin", iframe)
-
-  async function getVideoUrl(id) { // id movie
-    const data = await axios.get(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=4c4fcd40981097a4f391c61f2f249de1&language=en-US`)
-      .then((results) => {
-        return results.data.results.map(el => {
-          if (el.site === "YouTube") {
-            return `https://www.youtube.com/embed/${el.key}?&autoplay=1`;
-          }
-        })
-      })
-    return data[0]
-  }
-})

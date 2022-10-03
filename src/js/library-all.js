@@ -1,4 +1,5 @@
 const axios = require('axios');
+import imageURL from '../images/oops.jpg';
 const API_KEY = '5fe2b2c003e2bf661ee6b8424d931ac2';
 const IMG_REGUEST = 'https://image.tmdb.org/t/p/w500';
 
@@ -65,9 +66,9 @@ async function getElementById(id) {
 function renderMarckup(data) {
   const genres = data.genres.map(el => el.name);
   const marckup = `<li class="films__item" data-id = ${data.id}>
-      <img src=${IMG_REGUEST + data.poster_path} alt=${
-    data.title
-  } class="film_img"/>
+      <img src=${
+        data.poster_path ? IMG_REGUEST + data.poster_path : imageURL
+      } alt=${data.title} class="film_img"/>
       <p class="film__name">${data.title}</p>
       <p class="film__description">${genres} | ${data.release_date.slice(
     0,
@@ -114,17 +115,21 @@ function closeModal(e) {
 }
 
 async function getVideoUrlAndRenderPlayer(movie) {
+  console.log(movie);
   const data = await axios
     .get(
       `https://api.themoviedb.org/3/movie/${movie}/videos?api_key=${API_KEY}&language=en-US`
     )
     .then(results => {
+      if (results.data.results.length === 0) {
+        playerEl.innerHTML = `<div class = "library-modal-iframe" data-id = ${movie}></div>`;
+        return;
+      }
       return results.data.results.map(el => {
         if (el.site === 'YouTube') {
           const marcup = `<iframe class="library-modal-iframe" data-id = "${movie}" 
    src="https://www.youtube.com/embed/${el.key}?&autoplay=1"
    frameborder="0" allowfullscreen></iframe>`;
-
           playerEl.innerHTML = marcup;
         }
       });
