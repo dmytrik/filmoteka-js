@@ -142,7 +142,7 @@ async function renderModalLink(movie) {
       if (homepage === '') {
         linkBox.innerHTML = '';
       } else {
-        const marckup = `<a href="${homepage}" rel=" noopener noreferrer nofollow " target = "blank" class="library-modal-link">HOMEPAGE</a>`;
+        const marckup = `<a href="${homepage}" rel=" noopener noreferrer nofollow " target = "blank" class="library-modal-link">NETFLIX</a>`;
         linkBox.innerHTML = marckup;
       }
     });
