@@ -22,20 +22,6 @@ const tmdbApiService = new TmdbApiService();
 getMovies(currentPage).then(renderMovies);
 
 formEl.addEventListener('submit', createMovieGallery);
-
-document.querySelector('.form-filter-reset'),
-  addEventListener('submit', e => {
-    isFilter = true;
-    getMovies(1).then(renderMovies);
-    const loader = document.querySelector('.loader');
-    loader.classList.toggle('loader__hidden');
-  });
-document.getElementById('filter-form').addEventListener('change', e => {
-  isFilter = true;
-  getMovies(currentPage).then(renderMovies);
-  const loader = document.querySelector('.loader');
-  loader.classList.toggle('loader__hidden');
-
 document.querySelector('.form-filter-reset').addEventListener('submit', e => {
   e.preventDefault();
   warning.textContent = '';
@@ -60,22 +46,17 @@ document.getElementById('filter-form').addEventListener('change', e => {
   getMovies(currentPage).then(renderMovies);
   const loader = document.querySelector('.loader');
   loader.classList.remove('loader__hidden');
-
 });
 function getFilteredData(currentPage) {
   const year = document.getElementById('year');
   const sortBy = document.getElementById('sort-by');
   const genre = document.getElementById('genre');
-
-  if (genre.value === '' && year.value === '' && sortBy.value === '') return;
-
   if (genre.value === '' && sortBy.value === '' && year.value === '') {
     isFilter = false;
     currentPage = 1;
     getMovies(currentPage).then(renderMovies);
     return;
   }
-
   return `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=${genre.value}&primary_release_year=${year.value}&sort_by=${sortBy.value}&language=en-US&page=${currentPage}`;
 }
 
