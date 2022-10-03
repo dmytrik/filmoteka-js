@@ -5,3 +5,4 @@ import './js/team-modal';
 import './js/local-storage';
 import './js/modal';
 import './js/change-theme-color';
+import './js/arrowUp-scroll';
