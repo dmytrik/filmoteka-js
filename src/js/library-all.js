@@ -19,7 +19,7 @@ checkedLS();
 myLibraryEl.addEventListener('click', checkEventLibrary);
 filmListEl.addEventListener('click', checkEventModal);
 closeBtn.addEventListener('click', closeModal);
-backdropEl.addEventListener('click', closeByBackdrop);
+
 libraryRemoveBtn.addEventListener('click', deleteFromLibraryAndLS);
 
 function checkedLS() {
@@ -93,18 +93,21 @@ function checkEventModal(evt) {
 
 function openModal() {
   backdropEl.classList.remove('library-backdrop-is-hiden');
+  window.addEventListener('keydown', closeModal);
+  backdropEl.addEventListener('click', closeModal);
 }
 
-function closeModal() {
-  backdropEl.classList.add('library-backdrop-is-hiden');
-  playerEl.innerHTML = '';
-}
-
-function closeByBackdrop(evt) {
-  console.log('click');
-  if (evt.target.classList.contains('library-backdrop')) {
-    closeModal();
-    backdropEl.removeEventListener('click', closeByBackdrop);
+function closeModal(e) {
+  if (
+    e.target.classList.contains('library-backdrop') ||
+    e.code === 'Escape' ||
+    e.target.classList.contains('close-library-modal') ||
+    e.target.classList.contains('library-modal-img')
+  ) {
+    backdropEl.classList.add('library-backdrop-is-hiden');
+    playerEl.innerHTML = '';
+    window.removeEventListener('keydown', closeModal);
+    backdropEl.removeEventListener('click', closeModal);
   }
 }
 
@@ -117,7 +120,7 @@ async function getVideoUrlAndRenderPlayer(movie) {
       return results.data.results.map(el => {
         if (el.site === 'YouTube') {
           const marcup = `<iframe class="library-modal-iframe" data-id = "${movie}" 
-   src="http://www.youtube.com/embed/${el.key}?&autoplay=1"
+   src="https://www.youtube.com/embed/${el.key}?&autoplay=1"
    frameborder="0" allowfullscreen></iframe>`;
 
           playerEl.innerHTML = marcup;
@@ -161,7 +164,7 @@ function deleteFromLibraryAndLS(evt) {
 
   if (watchedEl.includes(idAttribute)) {
     const watchEl = localStorage.getItem('STORAGE_KEY_WATCHED');
-    arraysWatchId = JSON.parse(watchEl);
+    const arraysWatchId = JSON.parse(watchEl);
     const newWatchArrId = arraysWatchId.filter(item => item !== idAttribute);
     const newWatchedString = JSON.stringify(newWatchArrId);
     localStorage.removeItem('STORAGE_KEY_WATCHED');
@@ -171,7 +174,7 @@ function deleteFromLibraryAndLS(evt) {
     // checkedLS();
   } else {
     const queEl = localStorage.getItem('STORAGE_KEY_QUEUE');
-    arraysQueId = JSON.parse(queEl);
+    const arraysQueId = JSON.parse(queEl);
     const newQueArrId = arraysQueId.filter(item => item !== idAttribute);
     const newQueueString = JSON.stringify(newQueArrId);
     localStorage.removeItem('STORAGE_KEY_QUEUE');
