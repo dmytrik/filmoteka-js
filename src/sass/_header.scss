@@ -1,5 +1,4 @@
 .header {
-
   // transition: all 0.3s;
   &.dark-theme {
     background-color: #000;
@@ -180,8 +179,7 @@ input[type='search']::-webkit-search-results-button,
 input[type='search']::-webkit-search-results-decoration {
   display: none;
 }
-
-button[type='submit'] {
+.type-submit-button {
   text-indent: -999px;
   overflow: hidden;
   width: 12px;
@@ -198,8 +196,8 @@ button[type='submit'] {
   position: relative;
   margin-top: 26px;
 
-  @media screen and(max-width: 320px) {
-    margin-top: 40px;
+  @media screen and(max-width: 480px) {
+    margin-top: -32px;
   }
 }
 
@@ -235,7 +233,7 @@ button[type='submit'] {
 .more-button_img {
   cursor: pointer;
 
-  &>div {
+  & > div {
     width: 18px;
     height: 2px;
     border-radius: 2px;
@@ -266,7 +264,7 @@ button[type='submit'] {
   transition: all 0.3s;
   transition-timing-function: cubic-bezier(0.68, -0.35, 0.265, 1.35);
 
-  &>div {
+  & > div {
     transform: rotate(180deg);
     background: transparent;
     transition: all 0.3s;
@@ -366,6 +364,21 @@ button[type='submit'] {
     background-color: #c1081b;
   }
 }
+.logout__button {
+  margin-top: 85px;
+  width: 90px;
+  height: 30px;
+  background-color: #ff001b;
+  border: none;
+  border-radius: 5;
+  color: #fff;
+  font-size: 12px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #c1081b;
+  }
+}
 
 .signup__button {
   margin-top: 10px;
@@ -444,16 +457,18 @@ button[type='submit'] {
 //   border: 1px solid #c1081b;
 // }
 
-input:checked+.slider:before {
+input:checked + .slider:before {
   -webkit-transform: translateX(18px);
   -ms-transform: translateX(18px);
   transform: translateX(18px);
 
-  background: linear-gradient(0deg,
-      rgba(249, 255, 0, 1) 0%,
-      rgba(249, 255, 0, 1) 51%,
-      rgba(5, 144, 255, 1) 51%,
-      rgba(5, 144, 255, 1) 100%);
+  background: linear-gradient(
+    0deg,
+    rgba(249, 255, 0, 1) 0%,
+    rgba(249, 255, 0, 1) 51%,
+    rgba(5, 144, 255, 1) 51%,
+    rgba(5, 144, 255, 1) 100%
+  );
 }
 
 /* Rounded sliders */
@@ -463,61 +478,4 @@ input:checked+.slider:before {
 
 .slider.round:before {
   border-radius: 50%;
-}
-
-.filter {
-  display: flex;
-  // align-items: center;
-  margin-top: 10px;
-  justify-content: center;
-}
-
-.filter-flex {
-  display: flex;
-  flex-direction: column;
-}
-
-.filter-form {
-  border: none;
-
-}
-
-.filter_select-genre,
-.filter_select-year,
-.filter_select-sort {
-  background: transparent;
-  color: #FFF;
-  border: none;
-  color: inherit;
-  background: none;
-  border: none;
-  outline: none;
-  margin: 0;
-  padding: 0;
-  font-size: 14px;
-  outline: none !important;
-}
-
-.filter_select-genre option,
-.filter_select-year option,
-.filter_select-sort option {
-  border: none;
-  background: transparent;
-  color: #000;
-}
-
-.form-filter-reset {
-  transition: background .3s;
-  border-radius: 10px;
-  background: transparent;
-  border: none;
-  color: #FFF;
-  cursor: pointer;
-  font-size: 14px;
-
-  &:hover {
-    transition: background .3s;
-    border-radius: 10px;
-    background: red;
-  }
 }

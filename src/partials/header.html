@@ -23,15 +23,16 @@
       <div class="search__box">
         <form class="search_form">
           <input type="search" name="searshQuery" placeholder="Movie search" class="search" />
-          <button type="submit">Search</button>
+          <button type="submit" class="type-submit-button">Search</button>
         </form>
         <span class="search_warning"></span>
       </div>
       <div class="filter">
+        
         <form action="" id="filter-form" class="filter-form">
           <div class="filter-flex">
             <select class="filter_select-genre" name="genre" id="genre">
-              <option value="">Genre</option>
+              <option class="filter__option" value="">Genre</option>
               <option value="28">Action</option> 
               <option value="12">Adventure</option> 
               <option value="16">Animation</option> 
@@ -91,7 +92,7 @@
             </select>
           </div>
           
-          <button class="form-filter-reset">Reset</button>
+          <button type="submit" class="form-filter-reset">Reset</button>
         </form>
       </div>
       <div class="reg__container">

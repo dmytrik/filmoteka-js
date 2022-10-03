@@ -1,0 +1,195 @@
+.library-backdrop {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  -webkit-transition: -webkit-transform 500ms;
+  transition: -webkit-transform 500ms;
+  transition: transform 500ms;
+  transition: transform 500ms, -webkit-transform 500ms;
+
+  // @media screen and (min-width: 1200px) {
+  //   width: 391px;
+  // }
+}
+
+.library-backdrop.library-backdrop-is-hiden .library-modal {
+  -webkit-transform: scale(0.2);
+  transform: scale(0.2);
+}
+
+.library-modal {
+  position: absolute;
+  position: fixed;
+  width: 800px;
+  height: 530px;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%) scale(1);
+  transform: translate(-50%, -50%) scale(1);
+  padding: 40px 12px;
+  background: #fff;
+  margin-bottom: 200px;
+  border-radius: 5px;
+  -webkit-transition: -webkit-transform 500ms;
+  transition: -webkit-transform 500ms;
+  transition: transform 500ms;
+  transition: transform 500ms, -webkit-transform 500ms;
+  @media screen and (max-width: 320px) {
+    width: 280px;
+  }
+  @media screen and (min-width: 321px) and(max-width: 499px) {
+    width: 300px;
+  }
+  @media screen and (min-width: 500px) and(max-width: 767px) {
+    width: 400px;
+  }
+  @media screen and (min-width: 768px) and(max-width: 1199px) {
+    width: 704px;
+  }
+}
+
+.close-library-modal {
+  width: 14px;
+  height: 14px;
+  position: absolute;
+
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  text-align: center;
+  top: 12px;
+  right: 12px;
+
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.library-modal-img {
+  color: #0f0e0e;
+  width: 14px;
+  height: 14px;
+
+  transition: all 0.2s;
+  &:hover {
+    transform: rotate(180deg);
+  }
+}
+
+.library-modal-trailer {
+  width: auto;
+  height: 380px;
+  margin: 0 auto;
+}
+
+.library-modal-box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 20px;
+}
+
+.library-modal-link {
+  color: #fff;
+  font-size: 14px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+
+  width: 150px;
+  height: 50px;
+  display: block;
+  text-align: center;
+
+  padding-top: 17px;
+  padding-bottom: 17px;
+  padding-left: 16px;
+  padding-right: 16px;
+  background-color: black;
+  border-radius: 4px;
+  -webkit-transition: -webkit-transform 500ms;
+  transition: -webkit-transform 500ms;
+  transition: transform 500ms;
+  transition: transform 500ms, -webkit-transform 500ms;
+  @media screen and (max-width: 320px) {
+    width: 123px;
+    font-size: 12px;
+  }
+  @media screen and (min-width: 321px) and(max-width: 499px) {
+    width: 133px;
+    font-size: 12px;
+  }
+}
+
+.library-modal-link:hover {
+  -webkit-transform: scale(1.05);
+  transform: scale(1.05);
+
+  background-color: #ff001b;
+}
+
+.library-modal-btn {
+  margin-left: 20px;
+  cursor: pointer;
+  width: 150px;
+  height: 50px;
+  background-color: #ff6b01;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding-left: 16px;
+  padding-right: 16px;
+  font-size: 14px;
+  transition: transform 0.5s, -webkit-transform 0.5s;
+  display: block;
+  -webkit-transition: -webkit-transform 500ms;
+  transition: -webkit-transform 500ms;
+  transition: transform 500ms;
+  transition: transform 500ms, -webkit-transform 500ms;
+  @media screen and (max-width: 320px) {
+    width: 123px;
+    font-size: 12px;
+    margin-left: 10px;
+  }
+  @media screen and (min-width: 321px) and(max-width: 499px) {
+    width: 133px;
+    font-size: 12px;
+    margin-left: 10px;
+  }
+}
+
+.library-modal-btn:hover {
+  -webkit-transform: scale(1.05);
+  transform: scale(1.05);
+  background-color: #e15f02;
+  color: white;
+}
+
+.library-backdrop-is-hiden {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.library-modal-iframe {
+  border-radius: 5px;
+  width: 775px;
+  height: 380px;
+  @media screen and (max-width: 320px) {
+    width: 256px;
+  }
+  @media screen and (min-width: 321px) and(max-width: 499px) {
+    width: 276px;
+  }
+  @media screen and (min-width: 500px) and(max-width: 767px) {
+    width: 376px;
+  }
+  @media screen and (min-width: 768px) and(max-width: 1199px) {
+    width: 680px;
+  }
+}
+/*# sourceMappingURL=library-modal.css.map */

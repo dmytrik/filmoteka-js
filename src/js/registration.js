@@ -104,11 +104,7 @@ const monitorAuthState = async () => {
       notify.classList.add("notify")
       document.querySelector(".more-button-list")
         .innerHTML = `
-        <button class="login__button1" id="logout__button">Logout</button>
-          <label class="switch">
-                <input type="checkbox">
-                <span class="slider round"></span>
-              </label>`
+        <button class="logout__button" id="logout__button">Logout</button>`
       notify.innerHTML = `Welcome back ${user.email}!.`
       document.querySelector(".more-button-list").insertAdjacentElement("afterbegin", notify)
       document.querySelector("#logout__button").addEventListener("click", logout)
