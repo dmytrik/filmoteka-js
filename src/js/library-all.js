@@ -120,7 +120,7 @@ async function getVideoUrlAndRenderPlayer(movie) {
       return results.data.results.map(el => {
         if (el.site === 'YouTube') {
           const marcup = `<iframe class="library-modal-iframe" data-id = "${movie}" 
-   src="http://www.youtube.com/embed/${el.key}?&autoplay=1"
+   src="https://www.youtube.com/embed/${el.key}?&autoplay=1"
    frameborder="0" allowfullscreen></iframe>`;
 
           playerEl.innerHTML = marcup;
