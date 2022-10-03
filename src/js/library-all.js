@@ -164,7 +164,7 @@ function deleteFromLibraryAndLS(evt) {
 
   if (watchedEl.includes(idAttribute)) {
     const watchEl = localStorage.getItem('STORAGE_KEY_WATCHED');
-    arraysWatchId = JSON.parse(watchEl);
+    const arraysWatchId = JSON.parse(watchEl);
     const newWatchArrId = arraysWatchId.filter(item => item !== idAttribute);
     const newWatchedString = JSON.stringify(newWatchArrId);
     localStorage.removeItem('STORAGE_KEY_WATCHED');
@@ -174,7 +174,7 @@ function deleteFromLibraryAndLS(evt) {
     // checkedLS();
   } else {
     const queEl = localStorage.getItem('STORAGE_KEY_QUEUE');
-    arraysQueId = JSON.parse(queEl);
+    const arraysQueId = JSON.parse(queEl);
     const newQueArrId = arraysQueId.filter(item => item !== idAttribute);
     const newQueueString = JSON.stringify(newQueArrId);
     localStorage.removeItem('STORAGE_KEY_QUEUE');
