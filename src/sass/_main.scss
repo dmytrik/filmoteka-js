@@ -177,3 +177,74 @@
     margin-left: 8px;
   }
 }
+
+.library__empty-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  flex-direction: column;
+}
+
+.library__empty {
+  width: 152px;
+  height: 157px;
+  background-image: url('../images/library-img.svg');
+}
+
+.library__text-white {
+  margin-top: 30px;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 22.5376px;
+  line-height: 26px;
+
+  color: #ffffff;
+}
+.library__text-red {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 22.5376px;
+  line-height: 26px;
+
+  color: #ff001b;
+}
+
+.left__eye {
+  width: 46px;
+  height: 46px;
+  background-image: url('../images/left-eye.svg');
+  margin-left: 20px;
+  margin-top: 41px;
+  float: left;
+  animation: 4s linear 0s normal none infinite running rot;
+}
+@keyframes rot {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.right__eye {
+  width: 46px;
+  height: 46px;
+  background-image: url('../images/right-eye.svg');
+  float: left;
+  margin-left: 12px;
+  margin-top: 25px;
+
+  animation: 4s linear 0s normal none infinite running rot2;
+}
+@keyframes rot2 {
+  0% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
