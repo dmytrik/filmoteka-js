@@ -242,7 +242,10 @@ function createMovieGallery(e) {
   loader.classList.remove('loader__hidden');
   const searshQuery = e.currentTarget.elements.searshQuery.value.trim();
   if (!searshQuery) {
-    return alert('please enter something');
+    warning.textContent =
+      'Search result not successful. Enter the correct movie name';
+    loader.classList.add('loader__hidden');
+    return;
   }
   tmdbApiService.query = searshQuery;
   tmdbApiService.resetPage();

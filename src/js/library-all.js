@@ -92,6 +92,7 @@ function checkEventModal(evt) {
 }
 
 function openModal() {
+  libraryRemoveBtn.disabled = false;
   backdropEl.classList.remove('library-backdrop-is-hiden');
   window.addEventListener('keydown', closeModal);
   backdropEl.addEventListener('click', closeModal);
@@ -108,6 +109,7 @@ function closeModal(e) {
     playerEl.innerHTML = '';
     window.removeEventListener('keydown', closeModal);
     backdropEl.removeEventListener('click', closeModal);
+    console.clear();
   }
 }
 
@@ -157,6 +159,7 @@ function chekModalBtn(id) {
 }
 
 function deleteFromLibraryAndLS(evt) {
+  evt.currentTarget.disabled = true;
   const element = backdropEl.querySelector('.library-modal-iframe');
   const idAttribute = element.getAttribute('data-id');
   const findEl = document.querySelector(`[data-id="${idAttribute}"]`);
