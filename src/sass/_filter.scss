@@ -21,7 +21,7 @@
 }
 
 .filter_select-genre {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgb(26, 24, 24);
   border-radius: 5px;
   width: 150px;
   height: 24px;
@@ -35,13 +35,15 @@
     margin-bottom: 10px;
   }
 }
-
-.filter__option {
-  color: #cc0216;
-}
-
+// .filter_select-genre * {
+//   border-radius: 10px;
+//   background-color: rgb(26, 24, 24);
+// }
+// select option {
+//   background-color: blue;
+// }
 .filter_select-year {
-  background: rgba(255, 255, 255, 0.08);
+  background-color: rgb(26, 24, 24);
   border-radius: 5px;
   width: 70px;
   height: 24px;
@@ -57,7 +59,7 @@
   }
 }
 .filter_select-sort {
-  background: rgba(255, 255, 255, 0.08);
+  background-color: rgb(26, 24, 24);
   border-radius: 5px;
   width: 100px;
   height: 24px;

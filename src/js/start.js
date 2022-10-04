@@ -168,6 +168,15 @@ function pagination(totalPages, currentPage) {
     }
   }
   if (windowWidth < 768) {
+    if (totPages <= 5) {
+      for (let i = 1; i <= totPages; i += 1) {
+        page.push(`<a id="${i}">${i}</a>`);
+      }
+      paginationContainer.innerHTML = page.join('');
+      const activeEl = document.getElementById(`${currentPage}`);
+      activeEl.classList.add('active');
+      return;
+    }
     page.push('<a class="back pagination__arrow pagination__arrow_prev" >');
     if (currentPage <= 3) {
       for (let i = 1; i <= 5; i += 1) {
@@ -196,7 +205,6 @@ function pagination(totalPages, currentPage) {
 paginationContainer.addEventListener('click', paginationAdd);
 
 function paginationAdd(e) {
-  console.log('тізен');
   const warning = document.querySelector('.search_warning');
   formInput.value = '';
   warning.innerHTML = '';
@@ -305,7 +313,6 @@ async function fetchSearshedQuery(movies) {
 }
 
 function onChangePage(e) {
-  console.log('юра');
   formInput.value = '';
   warning.innerHTML = '';
   if (e.target.classList.contains('no-click')) {

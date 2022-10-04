@@ -12,8 +12,10 @@ const playerEl = document.querySelector('.library-modal-trailer');
 const linkBox = document.querySelector('#modal-div-link');
 const libraryRemoveBtn = document.querySelector('.library-modal-btn');
 
-const watchedEl = localStorage.getItem('STORAGE_KEY_WATCHED');
-const queueEl = localStorage.getItem('STORAGE_KEY_QUEUE');
+let watchedEl = localStorage.getItem('STORAGE_KEY_WATCHED');
+
+let queueEl = localStorage.getItem('STORAGE_KEY_QUEUE');
+
 let libraryAllEl = '';
 checkedLS();
 
@@ -25,9 +27,12 @@ libraryRemoveBtn.addEventListener('click', deleteFromLibraryAndLS);
 
 function checkedLS() {
   filmListEl.innerHTML = '';
-  // console.log(localStorage.length);
-
-  if (queueEl === null && watchedEl === null) {
+  if (
+    (queueEl === null && watchedEl === null) ||
+    (queueEl === '[]' && watchedEl === '[]') ||
+    (queueEl === null && watchedEl === '[]') ||
+    (queueEl === '[]' && watchedEl === null)
+  ) {
     const marckup = `<div class="library__empty-container"><div class="library__empty"><div class="left__eye"></div><div class="right__eye"></div></div><p class="library__text-white">Your library is <span class="library__text-red">empty!</span></p></div>`;
     filmListEl.innerHTML = marckup;
     return;
@@ -120,7 +125,6 @@ function closeModal(e) {
 }
 
 async function getVideoUrlAndRenderPlayer(movie) {
-  console.log(movie);
   const data = await axios
     .get(
       `https://api.themoviedb.org/3/movie/${movie}/videos?api_key=${API_KEY}&language=en-US`
