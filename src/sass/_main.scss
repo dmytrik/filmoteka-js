@@ -20,6 +20,7 @@
   margin-left: 8px;
   margin-bottom: 32px;
   float: left;
+  cursor: pointer;
   @media screen and(max-width: 768px) {
     width: calc((100% - 16px * 2) / 2);
   }
